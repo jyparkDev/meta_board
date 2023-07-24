@@ -1,15 +1,13 @@
 package com.meta.board.domain;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
-@ToString
-public class BoardDto {
-    private Long id;
+@Builder
+public class BoardBean {
     private String title;
     private String content;
     private String writer;
-    private String create_date;
-    private String modified_date;
+    private String passwd;
 }
