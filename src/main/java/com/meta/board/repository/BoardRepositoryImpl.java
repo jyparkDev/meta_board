@@ -1,23 +1,22 @@
 package com.meta.board.repository;
 
-import com.meta.board.domain.BoardBean;
+import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
 import com.meta.board.mapper.BoardMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class BoardRepositoryImpl implements BoardRepository{
 
-    @Autowired
-    private BoardMapper mapper;
+    private final BoardMapper mapper;
 
     @Override
-    public void save(BoardBean boardBean) {
-        mapper.save(boardBean);
+    public void save(Board board) {
+        mapper.save(board);
     }
 
     @Override
@@ -31,12 +30,17 @@ public class BoardRepositoryImpl implements BoardRepository{
     }
 
     @Override
-    public void updateBoard(Long id, BoardBean boardBean) {
-        mapper.update(id, boardBean);
+    public void updateBoard(Long id, Board board) {
+        mapper.update(id, board);
     }
 
     @Override
     public void deleteBoard(Long id) {
         mapper.delete(id);
+    }
+
+    @Override
+    public String passwordCheck(Long id) {
+        return mapper.getBoardPasswd(id);
     }
 }

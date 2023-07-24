@@ -1,15 +1,15 @@
 package com.meta.board.repository;
 
-import com.meta.board.domain.BoardBean;
+import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BoardRepository {
-    void save(BoardBean boardBean);
+    void save(Board board);
     List<BoardDto> findAll();
     BoardDto findById(Long id);
-    void updateBoard(Long id, BoardBean boardBean);
+    void updateBoard(Long id, Board board);
     void deleteBoard(Long id);
+    String passwordCheck(Long id);
 }
