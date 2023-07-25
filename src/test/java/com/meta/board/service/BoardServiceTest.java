@@ -41,7 +41,7 @@ class BoardServiceTest {
                 .passwd("a123")
                 .build();
         boardService.join(board);
-        List<BoardDto> boardList = boardService.findAll();
+        List<BoardDto> boardList = boardService.findAll(0,10);
         assertThat(boardList.size()).isEqualTo(1);
     }
 
@@ -61,7 +61,7 @@ class BoardServiceTest {
                 .build();
         boardService.join(board1);
         boardService.join(board2);
-        List<BoardDto> boardList = boardService.findAll();
+        List<BoardDto> boardList = boardService.findAll(0,10);
         assertThat(boardList.size()).isEqualTo(2);
     }
 
@@ -105,7 +105,7 @@ class BoardServiceTest {
         boardService.join(board);
         String password = "a123";
         boardService.deleteBoard(1L);
-        List<BoardDto> all = boardService.findAll();
+        List<BoardDto> all = boardService.findAll(0,10);
         assertThat(all.size()).isEqualTo(0);
     }
 

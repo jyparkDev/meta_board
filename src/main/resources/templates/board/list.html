@@ -13,10 +13,6 @@
         function writeForm(){
             window.location.href="/board/write";
         }
-
-        function detail(){
-            let id = document.getElementById()
-        }
     </script>
 </head>
 <body>
@@ -53,19 +49,40 @@
                     </th:block>
                     <th:block th:if="${boards.size() > 0}">
                         <tr th:each="board:${boards}">
-                            <th scope="row" th:text="${board.id}">1</th>
-                            <td><a th:href="@{/board/view(id=${board.id})}" th:text="${board.title}">Mark</a></td>
-                            <td th:text="${board.writer}">Otto</td>
-                            <td th:text="${board.create_date}">@mdo</td>
-                            <td th:text="${board.modified_date}">@mdo</td>
+                            <th scope="row" th:text="${board.id}"></th>
+                            <td><a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize})}" th:text="${board.title}"></a></td>
+                            <td th:text="${board.writer}"></td>
+                            <td th:text="${board.create_date}"></td>
+                            <td th:text="${board.modified_date}"></td>
                         </tr>
                     </th:block>
                 </tbody>
             </table>
         </div>
-        <div class="page-area">
-            <span><< | < 1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;> | >></span>
+        <div class="page-area" th:with="begin=${ph.beginPage}, end=${ph.endPage}">
+            <nav aria-label="Page navigation example" class="page-nav">
+                <ul class="pagination">
+                    <th:block th:if="${ph.showPrev}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/(page=${ph.beginPage - 1})}"  aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </th:block>
+                    <th:block th:each="page: ${#numbers.sequence(begin,end)}">
+                        <li class="page-item"><a class="page-link" th:text="${page}" th:href="@{/(page=${page},pagesize=${ph.pageSize})}"></a></li>
+                    </th:block>
+                    <th:block th:if="${ph.showNext}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/(page=${ph.endPage + 1})}"  aria-label="Previous">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+            </nav>
             <button id="write-btn" class="btn btn-light" onclick="writeForm()">글쓰기</button>
         </div>
+
 </body>
 </html>

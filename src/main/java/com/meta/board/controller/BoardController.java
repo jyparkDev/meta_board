@@ -2,6 +2,7 @@ package com.meta.board.controller;
 
 import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
+import com.meta.board.domain.PageHandler;
 import com.meta.board.domain.PassWordRequestDto;
 import com.meta.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,18 @@ public class BoardController {
 
     private final BoardService boardService;
     @GetMapping("/")
-    public String home(Model model){
-        List<BoardDto> boardList = boardService.findAll();
+    public String home(Integer page, Integer pageSize, Model model){
+
+        if (page == null) page = 1;
+        if (pageSize == null) pageSize = 10;
+
+        int totalCnt = boardService.getCount();
+        PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
+
+        List<BoardDto> boardList = boardService.findAll((page - 1) * pageSize ,pageSize);
         model.addAttribute("boards", boardList);
+        model.addAttribute("ph" , pageHandler);
+
         return "/board/list";
     }
 
@@ -41,15 +51,19 @@ public class BoardController {
     }
 
     @GetMapping("/board/view")
-    public String detail(@RequestParam("id") Long id,Model model){
+    public String detail(@RequestParam("id") Long id,
+                         int page, int pageSize, Model model){
         BoardDto board = boardService.findOne(id);
         model.addAttribute("board",board);
+        model.addAttribute("page",page);
+        model.addAttribute("pageSize", pageSize);
         return "/board/view";
     }
 
     @GetMapping("/board/search")
     public String searchKeyword(@RequestParam("keyword") String keyword,@RequestParam("list") String list, Model model){
         List<BoardDto> boardList = boardService.findByKeyword(keyword,list);
+        
         model.addAttribute("boards",boardList);
         model.addAttribute("list",list);
         return "/board/list";
@@ -59,7 +73,6 @@ public class BoardController {
     @ResponseBody
     public Map<String , String> passwordCheck(@RequestBody PassWordRequestDto passWordRequestDto, HttpServletResponse res){
         Map<String , String> result = new HashMap<>();
-        System.out.println(passWordRequestDto);
         if(!boardService.validPassWord(passWordRequestDto.getId(), passWordRequestDto.getPassword())){
             res.setStatus(HttpStatus.BAD_REQUEST.value());
         }

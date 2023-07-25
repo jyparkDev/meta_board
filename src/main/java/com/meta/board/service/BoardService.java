@@ -22,8 +22,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<BoardDto> findAll(){
-        return boardRepository.findAll();
+    public List<BoardDto> findAll(int offset, int pagesize){
+        return boardRepository.findAll(offset,pagesize);
     }
 
     public BoardDto findOne(Long id){
@@ -53,4 +53,7 @@ public class BoardService {
         return true;
     }
 
+    public int getCount(){
+        return boardRepository.count();
+    }
 }

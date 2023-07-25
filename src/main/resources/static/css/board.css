@@ -63,3 +63,7 @@ a{
 .search-bar{
     width: 200px;
 }
+
+.page-nav{
+    display: inline-block;
+}

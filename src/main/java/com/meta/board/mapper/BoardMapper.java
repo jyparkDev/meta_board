@@ -14,8 +14,8 @@ public interface BoardMapper {
             "VALUES(#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now())")
     void save(@Param("board") Board board);
 
-    @Select("SELECT * FROM BOARD ORDER BY MODIFIED_DATE DESC, ID DESC  LIMIT 10")
-    List<BoardDto> findAll();
+    @Select("SELECT * FROM BOARD ORDER BY MODIFIED_DATE DESC, ID DESC  LIMIT #{offset}, #{pageSize}")
+    List<BoardDto> findAll(@Param("offset") int offset, @Param("pageSize") int pageSize);
 
     @Select("SELECT * FROM BOARD WHERE id=#{id}")
     BoardDto findOne(@Param("id") Long id);
@@ -36,5 +36,6 @@ public interface BoardMapper {
     @Delete("TRUNCATE TABLE BOARD")
     void claer();
 
-
+    @Select("SELECT COUNT(*) FROM BOARD")
+    int count();
 }

@@ -16,6 +16,7 @@
     <script>
         let passwordValid = false;
         function back(){
+
             window.location.href = "/";
         }
         function del(){
@@ -134,7 +135,7 @@
         <div class="btn-area">
             <button class="btn btn-success" type="button" onclick="update();">수정하기</button>
             <button class="btn btn-danger" type="button" onclick="del();">삭제하기</button>
-            <button class="btn btn-secondary" type="button" onclick="back();">뒤로가기</button>
+            <button class="btn btn-secondary" type="button"><a th:href="@{/(page=${page}, pageSize=${pageSize})}" style="color:white">뒤로가기</a></button>
         </div>
     </div>
 </form>

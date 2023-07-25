@@ -20,8 +20,8 @@ public class BoardRepositoryImpl implements BoardRepository{
     }
 
     @Override
-    public List<BoardDto> findAll() {
-        return mapper.findAll();
+    public List<BoardDto> findAll(int offset, int pageSize) {
+        return mapper.findAll(offset,pageSize);
     }
 
     @Override
@@ -47,5 +47,10 @@ public class BoardRepositoryImpl implements BoardRepository{
     @Override
     public String passwordCheck(Long id) {
         return mapper.getBoardPasswd(id);
+    }
+
+    @Override
+    public int count() {
+        return mapper.count();
     }
 }
