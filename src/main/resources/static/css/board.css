@@ -1,0 +1,65 @@
+* {
+    font-family: 'Karla', sans-serif;
+}
+h1{
+    text-align: center;
+    margin-top : 20px;
+}
+.board-list, .page-area{
+    width: 95%;
+    margin: 20px auto;
+    min-width: 800px;
+    text-align: center;
+}
+.search-area{
+    width: 95%;
+    margin: 20px auto;
+    min-width: 800px;
+}
+.sort-area{
+    width: 105px;
+    text-align: center;
+}
+.board-id{
+    width: 10%;
+}
+.board-write, .board-date{
+    width: 15%;
+}
+
+#write-btn{
+    float: right;
+}
+
+.write-area{
+    margin: 0 auto;
+    width: 95%;
+    min-width: 800px;
+}
+
+.btn-area{
+    justify-items: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+    padding: 0 38%;
+}
+.btn-area > button{
+    margin-left: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.search-area > form > div{
+    display: inline-block;
+}
+.search-choice{
+    width: 105px;
+}
+.search-bar{
+    width: 200px;
+}

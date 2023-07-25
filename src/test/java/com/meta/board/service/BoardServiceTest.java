@@ -104,7 +104,7 @@ class BoardServiceTest {
                 .build();
         boardService.join(board);
         String password = "a123";
-        boardService.deleteBoard(1L, password);
+        boardService.deleteBoard(1L);
         List<BoardDto> all = boardService.findAll();
         assertThat(all.size()).isEqualTo(0);
     }

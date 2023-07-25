@@ -34,11 +34,23 @@ public class BoardService {
         boardRepository.updateBoard(id,board);
     }
 
-    public void deleteBoard(Long id, String password){
+    public void deleteBoard(Long id){
         String OriginPassWord = boardRepository.passwordCheck(id);
-        if(passwordEncoder.matches(password, OriginPassWord)){
-            boardRepository.deleteBoard(id);
+        boardRepository.deleteBoard(id);
+    }
+
+    public List<BoardDto> findByKeyword(String keyword,String list){
+        return boardRepository.findByKeyword(keyword,list);
+    }
+
+    public boolean validPassWord(Long id, String target){
+
+        String OriginPassWord = boardRepository.passwordCheck(id);
+        if(!passwordEncoder.matches(target, OriginPassWord)){
+            System.out.println("Aaa");
+            return false;
         }
+        return true;
     }
 
 }

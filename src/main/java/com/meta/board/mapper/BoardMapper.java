@@ -10,25 +10,31 @@ import java.util.List;
 @Mapper
 @Component
 public interface BoardMapper {
-    @Insert("INSERT INTO BOARD(title,content,writer,passwd,create_date,modified_date) " +
+    @Insert("INSERT INTO BOARD(title,content,writer,password,create_date,modified_date) " +
             "VALUES(#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now())")
     void save(@Param("board") Board board);
 
-    @Select("SELECT * FROM BOARD")
+    @Select("SELECT * FROM BOARD ORDER BY MODIFIED_DATE DESC, ID DESC  LIMIT 10")
     List<BoardDto> findAll();
 
     @Select("SELECT * FROM BOARD WHERE id=#{id}")
     BoardDto findOne(@Param("id") Long id);
 
-    @Update("UPDATE BOARD SET title=#{board.title}, content=#{board.content} WHERE id=#{id}")
+    @Select("SELECT PASSWORD FROM BOARD WHERE id=#{id}")
+    String getBoardPasswd(@Param("id") Long id);
+
+    @Select("SELECT * FROM BOARD WHERE ${list} LIKE CONCAT('%',#{keyword},'%') ORDER BY MODIFIED_DATE DESC, ID DESC LIMIT 10")
+    List<BoardDto> findByKeyword(@Param("keyword") String keyword, @Param("list") String list);
+
+
+    @Update("UPDATE BOARD SET title=#{board.title}, content=#{board.content}, modified_date=now() WHERE id=#{id}")
     void update(@Param("id") Long id, @Param("board") Board board);
 
     @Delete("DELETE FROM BOARD WHERE id=#{id}")
     void delete(@Param("id") Long id);
 
-    @Select("SELECT PASSWD FROM BOARD WHERE id=#{id}")
-    String getBoardPasswd(@Param("id") Long id);
-
     @Delete("TRUNCATE TABLE BOARD")
     void claer();
+
+
 }

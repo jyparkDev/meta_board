@@ -1,10 +1,13 @@
 package com.meta.board.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Builder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Board {
     private String title;
     private String content;

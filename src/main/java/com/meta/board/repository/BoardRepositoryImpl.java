@@ -25,6 +25,11 @@ public class BoardRepositoryImpl implements BoardRepository{
     }
 
     @Override
+    public List<BoardDto> findByKeyword(String keyword,String list) {
+        return mapper.findByKeyword(keyword,list);
+    }
+
+    @Override
     public BoardDto findById(Long id) {
         return mapper.findOne(id);
     }
