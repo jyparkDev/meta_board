@@ -2,6 +2,7 @@ package com.meta.board.service;
 
 import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
+import com.meta.board.mapper.BoardMapper;
 import com.meta.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +16,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final BoardMapper mapper;
     public void join(Board board){
         String encodePassword = passwordEncoder.encode(board.getPasswd());
         board.passwordEncoding(encodePassword);
@@ -27,7 +28,9 @@ public class BoardService {
     }
 
     public BoardDto findOne(Long id){
-        return boardRepository.findById(id);
+        BoardDto board = boardRepository.findById(id);
+        mapper.addViewCount(id);
+        return board;
     }
 
     public void updateBoard(Long id, Board board){
@@ -39,8 +42,8 @@ public class BoardService {
         boardRepository.deleteBoard(id);
     }
 
-    public List<BoardDto> findByKeyword(String keyword,String list){
-        return boardRepository.findByKeyword(keyword,list);
+    public List<BoardDto> findByKeyword(String keyword,String list, int page, int pageSize){
+        return boardRepository.findByKeyword(keyword,list,page,pageSize);
     }
 
     public boolean validPassWord(Long id, String target){
@@ -55,5 +58,8 @@ public class BoardService {
 
     public int getCount(){
         return boardRepository.count();
+    }
+    public int getKeyWordCount(String keyword,String list){
+        return boardRepository.keywordCount(keyword,list);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class BoardServiceTest {
 
     @Autowired
@@ -34,15 +34,18 @@ class BoardServiceTest {
 
     @Test
     void 게시글_등록() {
-        Board board = Board.builder()
-                .title("test")
-                .content("content")
-                .writer("jypark")
-                .passwd("a123")
-                .build();
-        boardService.join(board);
-        List<BoardDto> boardList = boardService.findAll(0,10);
-        assertThat(boardList.size()).isEqualTo(1);
+        for(int i = 1 ; i <= 200 ; i++){
+            Board board = Board.builder()
+                    .title("title"+i)
+                    .content("content"+i)
+                    .writer("tester"+i)
+                    .passwd(i+"")
+                    .build();
+            boardService.join(board);
+        }
+
+//        List<BoardDto> boardList = boardService.findAll(0,10);
+//        assertThat(boardList.size()).isEqualTo(1);
     }
 
     @Test

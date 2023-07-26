@@ -8,11 +8,13 @@ import java.util.List;
 public interface BoardRepository {
     void save(Board board);
     List<BoardDto> findAll(int offset, int pageSize);
-    List<BoardDto> findByKeyword(String keyword, String list);
+    List<BoardDto> findByKeyword(String keyword, String list,int offset,int pageSize);
     BoardDto findById(Long id);
     void updateBoard(Long id, Board board);
     void deleteBoard(Long id);
     String passwordCheck(Long id);
 
     int count();
+
+    int keywordCount(String keyword, String list);
 }

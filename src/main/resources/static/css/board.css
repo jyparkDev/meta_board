@@ -1,40 +1,66 @@
 * {
-    font-family: 'Karla', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 }
-h1{
-    text-align: center;
-    margin-top : 20px;
+
+header{
+    margin: 25px auto;
+    width: 1100px;
+    border-bottom: 2px solid #eee;
+    padding-top:25px;
+}
+.contains{
+    margin: 30px auto;
+    width: 1100px;
+}
+.list-top-area{
+    overflow: hidden;
+}
+
+.search-area{
+    float: left
+}
+
+.write-btn-area{
+    float:right;
 }
 .board-list, .page-area{
-    width: 95%;
     margin: 20px auto;
-    min-width: 800px;
     text-align: center;
 }
-.search-area{
-    width: 95%;
-    margin: 20px auto;
-    min-width: 800px;
+
+#title{
+    text-align: left;
+    padding-left: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.8rem 0.5rem;
+    overflow: hidden;
 }
+
+.board-list table{
+    table-layout:fixed;
+}
+
+
 .sort-area{
     width: 105px;
     text-align: center;
 }
-.board-id{
-    width: 10%;
-}
-.board-write, .board-date{
-    width: 15%;
-}
 
+.board-id{
+    width: 100px;
+}
+.board-title{
+    width: 650px;
+}
+.board-write{
+    width: 155px;
+}
+.board-date{
+    width: 120px;
+}
 #write-btn{
     float: right;
-}
-
-.write-area{
-    margin: 0 auto;
-    width: 95%;
-    min-width: 800px;
 }
 
 .btn-area{
@@ -66,4 +92,11 @@ a{
 
 .page-nav{
     display: inline-block;
+}
+
+
+input:focus {outline: none;}
+
+#keyword{
+    padding-left: 5px;
 }

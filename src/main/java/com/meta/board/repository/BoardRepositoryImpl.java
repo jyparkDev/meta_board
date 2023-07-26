@@ -25,8 +25,8 @@ public class BoardRepositoryImpl implements BoardRepository{
     }
 
     @Override
-    public List<BoardDto> findByKeyword(String keyword,String list) {
-        return mapper.findByKeyword(keyword,list);
+    public List<BoardDto> findByKeyword(String keyword,String list,int offset,int pageSize) {
+        return mapper.findByKeyword(keyword,list,offset,pageSize);
     }
 
     @Override
@@ -52,5 +52,10 @@ public class BoardRepositoryImpl implements BoardRepository{
     @Override
     public int count() {
         return mapper.count();
+    }
+
+    @Override
+    public int keywordCount(String keyword, String list) {
+        return mapper.keyWordCount(keyword,list);
     }
 }

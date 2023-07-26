@@ -35,6 +35,7 @@ public class BoardController {
         List<BoardDto> boardList = boardService.findAll((page - 1) * pageSize ,pageSize);
         model.addAttribute("boards", boardList);
         model.addAttribute("ph" , pageHandler);
+        model.addAttribute("keyword" , "");
 
         return "/board/list";
     }
@@ -57,14 +58,22 @@ public class BoardController {
         model.addAttribute("board",board);
         model.addAttribute("page",page);
         model.addAttribute("pageSize", pageSize);
-        return "/board/view";
+        return "/board/detail";
     }
 
     @GetMapping("/board/search")
-    public String searchKeyword(@RequestParam("keyword") String keyword,@RequestParam("list") String list, Model model){
-        List<BoardDto> boardList = boardService.findByKeyword(keyword,list);
+    public String searchKeyword(@RequestParam("keyword") String keyword,@RequestParam("list") String list, Integer page, Integer pageSize,Model model){
+        if(page == null) page = 1;
+        if(pageSize == null) pageSize = 10;
+        int totalCnt = boardService.getKeyWordCount(keyword,list);
+        PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
+
+        List<BoardDto> boardList = boardService.findByKeyword(keyword,list,(page - 1) * pageSize ,pageSize);
         
         model.addAttribute("boards",boardList);
+        model.addAttribute("list",list);
+        model.addAttribute("ph" , pageHandler);
+        model.addAttribute("keyword",keyword);
         model.addAttribute("list",list);
         return "/board/list";
     }
@@ -85,7 +94,7 @@ public class BoardController {
         boardService.updateBoard(id,board);
         BoardDto updateBoard = boardService.findOne(id);
         model.addAttribute("board",updateBoard);
-        return "/board/view";
+        return "/board/detail";
     }
 
     @GetMapping("/board/remove")

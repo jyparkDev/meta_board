@@ -6,10 +6,11 @@ import lombok.ToString;
 @Getter
 @ToString
 public class BoardDto {
+    private Long rnum;
     private Long id;
+    private String writer;
     private String title;
     private String content;
-    private String writer;
+    private int viewNum;
     private String create_date;
-    private String modified_date;
 }
