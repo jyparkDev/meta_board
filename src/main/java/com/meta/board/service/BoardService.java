@@ -2,6 +2,7 @@ package com.meta.board.service;
 
 import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
+import com.meta.board.domain.BoardUpdateDto;
 import com.meta.board.mapper.BoardMapper;
 import com.meta.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<BoardDto> findAll(int offset, int pagesize){
-        return boardRepository.findAll(offset,pagesize);
+    public List<BoardDto> findAll(int offset, int pagesize, String sort,String dir){
+        return boardRepository.findAll(offset,pagesize, sort, dir);
     }
 
     public BoardDto findOne(Long id){
@@ -33,7 +34,7 @@ public class BoardService {
         return board;
     }
 
-    public void updateBoard(Long id, Board board){
+    public void updateBoard(Long id, BoardUpdateDto board){
         boardRepository.updateBoard(id,board);
     }
 

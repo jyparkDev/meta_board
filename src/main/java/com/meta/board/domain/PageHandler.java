@@ -30,10 +30,18 @@ public class PageHandler {
 
         totalPage = (int)Math.ceil((double) totalCnt / pageSize);
         beginPage = (page - 1) / naviSize * naviSize + 1;
-        endPage = Math.min(beginPage + naviSize - 1,totalPage) ;
-        prev = beginPage != 1;
-        next = endPage != totalPage;
-        first = page != 1;
-        end = page != totalPage;
+        if (totalCnt == 0){
+            endPage = 1;
+            prev = false;
+            next = false;
+            end = false;
+            first = false;
+        }else{
+            endPage = Math.min(beginPage + naviSize - 1,totalPage) ;
+            prev = beginPage != 1;
+            next = endPage != totalPage;
+            first = page != 1;
+            end = page != totalPage;
+        }
     }
 }

@@ -1,0 +1,77 @@
+
+/* 상세 보기 페이지 */
+.description-area{
+    width: 100%;
+    border: 1px solid #eee;
+    padding: 15px 5px;
+    border-radius: 5px;
+}
+
+.title-area{
+    margin-top: 20px;
+    font-size : 0.977777777vw;
+    overflow: hidden;
+}
+
+.create-date-area{float: right;}
+.writer-area{float: left;}
+
+.content{
+    font-size:2.3333333vh;
+    word-break: break-all;
+}
+.content-area{
+    width: 100%;
+    margin-top: 30px;
+    padding: 0 10px;
+}
+
+/* 버튼 영역 */
+.btn-area{
+    justify-items: center;
+    margin-top: 40px;
+    overflow: hidden;
+}
+
+.back-btn-area{float: left;}
+
+.back-btn{
+    border: 1px solid black;
+    border-radius: 5px;
+    background: white;
+    padding: 0.375rem 0.375rem;
+}
+
+.back-btn:hover{
+    background-color: #eee;
+}
+.etc{
+    display: none;
+    width: 100px;
+    margin-top: 10px;
+    top: 100%;
+    border: 1px solid #eaeaea;
+    padding: 10px;
+    translate: -60px;
+    border-radius: 8px;
+}
+
+.etc-btn{
+    float: right;
+    position: relative;
+    width: 40px;
+}
+
+.etc > button{
+    font-size : 13px;
+    display: block;
+    margin-bottom: 5px;
+    color: red;
+    background: #fff;
+}
+
+.etc > button:hover{
+    background: #eee;
+    color: red;
+}
+

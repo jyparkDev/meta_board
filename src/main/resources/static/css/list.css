@@ -1,0 +1,63 @@
+#title, #writer{
+    text-align: left;
+    padding-left: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+/* 상단 영역 */
+.list-top-area{overflow: hidden;}
+.write-btn-area{float:right;}
+
+.search-area, .sort-area{float: left}
+
+
+/* 리스트 영역 */
+.board-list, .page-area{
+    margin: 25px auto;
+    text-align: center;
+}
+
+.board-list table{
+    table-layout:fixed;
+    border-top: 1px solid #ddd;
+}
+
+.board-id{width: 100px;}
+.board-title{width: 650px;}
+.board-write{width: 155px;}
+.board-date{width: 120px;}
+
+/* 정렬 영역 */
+.sort-area{
+    width: 105px;
+    text-align: center;
+}
+
+/* 하단 영역 공통 */
+.list-bottom-area{
+    width: 100%;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    padding: 25px 30%;
+}
+/* 하단(페이징 영역) */
+.page-item{margin: 0 5px;}
+.page-num{border: none !important;}
+.page-nav{display: inline-block;}
+.pagination {--bs-pagination-active-bg: #7b9dbb !important;}
+.page-link{color : #0a0c9e !important;}
+
+/* 하단(검색 영역)*/
+.search-area > form > div{
+    display: inline-block;
+    margin-left: 0.19999999vw;
+}
+.search-choice{width: 105px;}
+.search-bar{width: 200px;}
+#keyword{padding-left: 5px;}
+
+
+

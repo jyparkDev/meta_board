@@ -1,0 +1,27 @@
+.info-area{
+    overflow: hidden;
+}
+.writer-area{
+    width: 395px;
+    float: left;
+}
+
+.password-area{
+    width: 380px;
+    float: right;
+}
+
+.btn-area{
+    display: flex;
+    margin-top:30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-area > button{
+    margin-right: 10px;
+}

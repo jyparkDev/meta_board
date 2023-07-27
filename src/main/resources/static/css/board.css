@@ -1,8 +1,9 @@
 * {
     font-family: 'Noto Sans KR', sans-serif;
 }
+
 header{
-    margin: 50px auto 10px auto;
+    margin: 3vh auto;
     width: 1100px;
     border-bottom: 2px solid #eee;
     padding-top:25px;
@@ -18,7 +19,7 @@ h2{
     overflow: hidden;
 }
 
-.search-area{
+.search-area, .sort-area{
     float: left
 }
 
@@ -26,7 +27,7 @@ h2{
     float:right;
 }
 .board-list, .page-area{
-    margin: 35px auto;
+    margin: 25px auto;
     text-align: center;
 }
 
@@ -178,4 +179,11 @@ input:focus {outline: none;}
 
 .page-link{
     color : #0a0c9e;
+}
+
+.list-bottom-area{
+    width: 100%;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    padding: 25px 30%;
 }

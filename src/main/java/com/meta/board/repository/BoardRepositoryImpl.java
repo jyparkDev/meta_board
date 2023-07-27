@@ -2,6 +2,7 @@ package com.meta.board.repository;
 
 import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
+import com.meta.board.domain.BoardUpdateDto;
 import com.meta.board.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,10 +19,9 @@ public class BoardRepositoryImpl implements BoardRepository{
     public void save(Board board) {
         mapper.save(board);
     }
-
     @Override
-    public List<BoardDto> findAll(int offset, int pageSize) {
-        return mapper.findAll(offset,pageSize);
+    public List<BoardDto> findAll(int offset, int pageSize, String sort, String dir) {
+        return mapper.findAll(offset,pageSize,sort,dir);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BoardRepositoryImpl implements BoardRepository{
     }
 
     @Override
-    public void updateBoard(Long id, Board board) {
+    public void updateBoard(Long id, BoardUpdateDto board) {
         mapper.update(id, board);
     }
 
