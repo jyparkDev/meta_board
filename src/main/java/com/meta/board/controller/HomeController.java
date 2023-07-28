@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-        return "redirect:/board/list?page=1&pageSize=10&sort=create_date";
+        return "redirect:/board/list?page=1&pageSize=10";
     }
 }

@@ -17,6 +17,6 @@ function valid(){
 }
 
 // 뒤로가기
-function back(){
+function home(){
     window.location.href = "/";
 }

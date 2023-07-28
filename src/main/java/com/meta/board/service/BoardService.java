@@ -3,6 +3,7 @@ package com.meta.board.service;
 import com.meta.board.domain.Board;
 import com.meta.board.domain.BoardDto;
 import com.meta.board.domain.BoardUpdateDto;
+import com.meta.board.domain.Condition;
 import com.meta.board.mapper.BoardMapper;
 import com.meta.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<BoardDto> findAll(int offset, int pagesize, String sort,String dir){
-        return boardRepository.findAll(offset,pagesize, sort, dir);
+    public List<BoardDto> findAll(int offset, int pagesize, Condition condition){
+        return boardRepository.findAll(offset,pagesize, condition);
     }
 
     public BoardDto findOne(Long id){
@@ -57,10 +58,7 @@ public class BoardService {
         return true;
     }
 
-    public int getCount(){
-        return boardRepository.count();
-    }
-    public int getKeyWordCount(String keyword,String list){
-        return boardRepository.keywordCount(keyword,list);
+    public int getCount(String keyword, String list){
+        return boardRepository.count(keyword,list);
     }
 }
