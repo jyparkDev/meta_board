@@ -1,7 +1,7 @@
 //package com.meta.board.repository;
 //
-//import com.meta.board.domain.Board;
-//import com.meta.board.domain.BoardDto;
+//import com.meta.board.domain.board.Board;
+//import com.meta.board.domain.board.BoardDto;
 //import com.meta.board.mapper.BoardMapper;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;

@@ -1,9 +1,10 @@
-package com.meta.board.repository;
+package com.meta.board.repository.board;
 
-import com.meta.board.domain.Board;
-import com.meta.board.domain.BoardDto;
-import com.meta.board.domain.BoardUpdateDto;
+import com.meta.board.domain.board.Board;
+import com.meta.board.domain.board.BoardDto;
+import com.meta.board.domain.board.BoardUpdateDto;
 import com.meta.board.domain.Condition;
+import com.meta.board.domain.reply.ReplyMakeInfoDto;
 import com.meta.board.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,14 +21,20 @@ public class BoardRepositoryImpl implements BoardRepository{
     public void save(Board board) {
         mapper.save(board);
     }
+
     @Override
-    public List<BoardDto> findAll(int offset, int pageSize, Condition condition) {
-        return mapper.findAll(offset,pageSize, condition);
+    public Long findBoardId() {
+        return mapper.findLastBoardId();
     }
 
     @Override
-    public List<BoardDto> findByKeyword(String keyword, String list, int offset, int pageSize) {
-        return null;
+    public void updateBoardGroup(Long id, Long board_group) {
+        mapper.updateBoardGroup(id,board_group);
+    }
+
+    @Override
+    public List<BoardDto> findAll(int offset, int pageSize, Condition condition) {
+        return mapper.findAll(offset,pageSize, condition);
     }
 
     @Override
@@ -53,6 +60,16 @@ public class BoardRepositoryImpl implements BoardRepository{
     @Override
     public int count(String keyword, String list) {
         return mapper.count(keyword, list);
+    }
+
+    @Override
+    public String findTitle(Long id) {
+        return mapper.findTitle(id);
+    }
+
+    @Override
+    public ReplyMakeInfoDto findInfoForMakeReply(Long id) {
+        return mapper.findInfoForMakeReply(id);
     }
 
 

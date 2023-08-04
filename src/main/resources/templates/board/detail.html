@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
+        <title>상세 Page</title>
         <meta charset="UTF-8">
         <link href="/css/common.css" type="text/css" rel="stylesheet">
         <link href="/css/detail.css" type="text/css" rel="stylesheet">
@@ -35,36 +36,50 @@
     <header>
         <h2>커뮤니티</h2>
     </header>
-        <section class="contains">
-            <article class="description-area">
-                <h1 th:text="${board.title}">제목</h1>
-                <article class="title-area">
-                    <input type="hidden" id="id" th:value="${board.id}">
-                    <div class="create-date-area">
-                        <span>등록일 : </span><span th:text="${board.create_date}">0000-00-00</span>
-                    </div>
-                    <div class="writer-area">
-                        <span>작성자 : </span><span th:text="${board.writer}">홍길동</span>
-                    </div>
-                </article>
-            </article>
-            <article class="content-area">
-                <div class="content" th:text="${board.content}"> 내용이 없습니다.</div>
-            </article>
-            <article class="btn-area">
-                <div class="back-btn-area">
-                    <button class="back-btn" type="button"><a th:href="@{/board/list(page=${page}, pageSize=${pageSize},
-                    list=${condition.list},keyword=${condition.keyword},sort=${condition.sort}, dir=${condition.dir})}">목록으로</a></button>
+    <section class="contains">
+        <article class="description-area">
+            <h1 th:text="${board.title}">제목</h1>
+            <article class="title-area">
+                <input type="hidden" id="id" th:value="${board.id}">
+                <div class="create-date-area">
+                    <span>등록일 : </span><span th:text="${board.create_date}">0000-00-00</span>
                 </div>
-                <div class="etc-btn">
-                    <button class="btn btn-outline-dark" type="button" id="open-btn">...</button>
-                    <div class="etc" id="etc">
-                        <button class="btn btn btn-light" type="button" onclick="update();">수정하기</button>
-                        <button class="btn btn btn-light" type="button" onclick="postDelete();">삭제하기</button>
-                    </div>
+                <div class="writer-area">
+                    <span>작성자 : </span><span th:text="${board.writer}">홍길동</span>
                 </div>
             </article>
-        </section>
+        </article>
+        <article class="content-area">
+            <div class="content" th:text="${board.content}"> 내용이 없습니다.</div>
+        </article>
+        <article class="btn-area">
+            <div class="back-btn-area">
+                <button class="reply-btn" type="button" onclick="replyForm();">답글작성</button>
+                <button class="back-btn" type="button">
+                    <a th:href="@{/board/list(page=${page}, pageSize=${pageSize}, list=${condition.list},keyword=${condition.keyword},
+                sort=${condition.sort}, dir=${condition.dir})}">목록으로</a>
+                </button>
+            </div>
+            <div class="etc-btn">
+                <button class="btn btn-outline-dark" type="button" id="open-btn">...</button>
+                <div class="etc" id="etc">
+                    <button class="btn btn btn-light" type="button" onclick="update();">수정하기</button>
+                    <button class="btn btn btn-light" type="button" onclick="postDelete();">삭제하기</button>
+                </div>
+            </div>
+        </article>
+        <article class="comment-area">
+            <article class="comment-write-area">
+                댓글 작성 영역
+            </article>
+            <article class="comment-view-area">
+                댓글 View 영역
+            </article>
+            <article class="comment-paging">
+                댓글 페이징 처리 영역
+            </article>
+        </article>
+    </section>
 
     </body>
 </html>

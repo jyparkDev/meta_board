@@ -66,6 +66,10 @@ function updatePasswordCheck(){
         }
     });
 }
+function replyForm(){
+    let id = $('#id').val();
+    location.href = "/reply/write?id="+id;
+}
 
 // 팝업 기능
 function open_etc(){

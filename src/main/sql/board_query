@@ -1,0 +1,39 @@
+use test;
+
+drop table board;
+
+// BOARD TABLE 생성
+create table board(
+	id int primary key AUTO_INCREMENT,
+    title varchar(50) not null,
+    writer varchar(20) not null,
+    passwd varchar(255) not null,
+    create_date date,
+    modified_date date,
+    board_group int default 0,
+    board_group_order int default 0,
+    board_depth int default 0,
+    view_num int default 0
+) charset=utf8;
+
+// column 수정
+alter table board add column (content varchar(255) not null);
+alter table board modify  content varchar(500);
+desc board;
+
+//pk가 있는 테이블 데이터 truncate/delete 시 FK키 체크 유무를 변경
+set FOREIGN_KEY_CHECKS = 0;
+truncate table board;
+set FOREIGN_KEY_CHECKS = 1;
+
+
+
+// 게시글 추가
+INSERT INTO BOARD(title,content,writer,passwd,create_date,modified_date) VALUES(#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now());
+
+// 게시글 조회
+"SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, " +
+         "(select count(*) from comments c where B.id = c.board_id) as comment_count from board B, " +
+         "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
+         "order by ${condition.sort} ${condition.dir}, id ${condition.dir}) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}"
+

@@ -4,14 +4,14 @@ function writeValid(){
     let content = $('#content').val();
     // 빈 공백일 경우
     if(title.replaceAll([' '],'').length == 0){
-        alert('제목 비었습니다.');
+        alert('제목을 입력해주세요');
         $('#title').focus();
-        return;
+        return false;
     }
     if(writer.replaceAll([' '],'').length == 0){
-        alert('작성자가 비었습니다.');
+        alert('작성자를 입력해주세요');
         $('#writer').focus();
-        return;
+        return false;
     }
 
     var pw = $("#passwd").val();
@@ -28,12 +28,8 @@ function writeValid(){
         $('#passwd').focus();
         return false;
     }
-    dataTrim();
 
-    let form = document.getElementById('submit-form');
-    form.method ="POST";
-    form.action = "/board/write";
-    form.submit();
+    return true;
 }
 function updateValid(){
 
@@ -68,4 +64,46 @@ function dataTrim(){
     $('#title').val(title.trim());
     $('#writer').val(writer.trim());
     $('#content').val(content.trim());
+}
+
+function inputCheck(){
+    $('#title').on( 'keyup', function() {
+        let title = $('#title').val();
+        if(title.length > 50){
+            $('#title').val(title.substring(0,50));
+            $('#title').focus();
+            alert('제목 50자 초과');
+        }
+    });
+
+    $('#title').bind('input paste', function(){
+        $(this).trigger('keyup');
+    });
+
+    $('#writer').on( 'keyup', function() {
+        let size = $( '#writer' ).val();
+        if(size.length > 20){
+            $('#writer').val(size.substring(0,20));
+            $('#writer').focus();
+            alert('작성자명 20자 초과');
+        }
+    });
+
+    $('#writer').bind('input paste', function(){
+        $(this).trigger('keyup');
+    });
+
+    $('#content').on( 'focus keydown', function() {
+        let size = $( '#content' ).val();
+        $('#count').text(size.length);
+        if(size.length > 500){
+            $('#content').val(size.substring(0,500));
+            $('#content').focus();
+            alert('500자 초과');
+        }
+    });
+
+    $('#content').bind('input paste', function(){
+        $(this).trigger('focus');
+    });
 }

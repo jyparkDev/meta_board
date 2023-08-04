@@ -1,6 +1,6 @@
 package com.meta.board;
 
-import com.meta.board.domain.BoardDto;
+import com.meta.board.domain.board.BoardDto;
 import com.meta.board.mapper.BoardMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

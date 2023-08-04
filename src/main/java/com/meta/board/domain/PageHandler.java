@@ -5,7 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-@Getter @Setter
+@Getter
+@Setter
 public class PageHandler {
     private int totalCnt; // 총 게시물 갯수
     private int pageSize; // 한 페이지의 크기
@@ -19,29 +20,24 @@ public class PageHandler {
     private boolean first; // 가장 앞 블럭으로
     private boolean end; // 가장 마지막 블럭으로
 
-    public PageHandler(int totalCnt, int page){
-        this(totalCnt,page,10);
+    public PageHandler(int totalCnt, int page) {
+        this(totalCnt, page, 10);
     }
 
-    public PageHandler(int totalCnt, int page, int pageSize){
+    public PageHandler(int totalCnt, int page, int pageSize) {
+        if (totalCnt == 0) return;
         this.totalCnt = totalCnt;
         this.page = page;
         this.pageSize = pageSize;
 
-        totalPage = (int)Math.ceil((double) totalCnt / pageSize);
+        totalPage = (int) Math.ceil((double) totalCnt / pageSize);
         beginPage = (page - 1) / naviSize * naviSize + 1;
-        if (totalCnt == 0){
-            endPage = 1;
-            prev = false;
-            next = false;
-            end = false;
-            first = false;
-        }else{
-            endPage = Math.min(beginPage + naviSize - 1,totalPage) ;
-            prev = beginPage != 1;
-            next = endPage != totalPage;
-            first = page != 1;
-            end = page != totalPage;
-        }
+
+        endPage = Math.min(beginPage + naviSize - 1, totalPage);
+        prev = beginPage != 1;
+        next = endPage != totalPage;
+        first = page != 1;
+        end = page != totalPage;
+
     }
 }

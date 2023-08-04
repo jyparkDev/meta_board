@@ -16,6 +16,14 @@ function valid(){
     return true;
 }
 
+// 입력 Reset
+function resetForm(){
+    $('#title').val('');
+    $('#writer').val('');
+    $('#passwd').val('');
+    $('#content').val('');
+}
+
 // 뒤로가기
 function home(){
     window.location.href = "/";

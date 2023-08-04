@@ -17,46 +17,18 @@
         <meta charset="UTF-8">
         <script>
             $( document ).ready( function() {
-                $('#title').on( 'keyup', function() {
-                    let size = $('#title').val();
-                    if(size.length > 50){
-                        $('#title').val(size.substring(0,50));
-                        $('#title').focus();
-                        alert('제목 50자 초과');
-                    }
-                });
-
-                $('#title').bind('input paste', function(){
-                    $(this).trigger('keyup');
-                });
-                
-                $('#writer').on( 'keyup', function() {
-                    let size = $( '#writer' ).val();
-                    if(size.length > 20){
-                        $('#writer').val(size.substring(0,20));
-                        $('#writer').focus();
-                        alert('작성자명 20자 초과');
-                    }
-                });
-
-                $('#writer').bind('input paste', function(){
-                    $(this).trigger('keyup');
-                });
-
-                $('#content').on( 'focus keydown', function() {
-                    let size = $( '#content' ).val();
-                    $('#count').text(size.length);
-                    if(size.length > 500){
-                        $('#content').val(size.substring(0,500));
-                        $('#content').focus();
-                        alert('500자 초과');
-                    }
-                });
-
-                $('#content').bind('input paste', function(){
-                    $(this).trigger('focus');
-                });
+                $('#title').focus();
+                inputCheck();
             });
+            function submitForm(){
+                if(writeValid()){
+                    dataTrim();
+                    let form = document.getElementById('submit-form');
+                    form.method ="POST";
+                    form.action = "/board/write";
+                    form.submit();
+                }
+            }
         </script>
     </head>
     <body>
@@ -64,7 +36,6 @@
             <h2>작성하기</h2>
         </header>
         <section class="contains">
-
             <form id="submit-form">
                 <div class="input-group mb-3 title-area">
                     <span class="input-group-text" >제목</span>
@@ -97,8 +68,8 @@
                 </div>
             </form>
             <div class="btn-area">
-                <button class="btn btn-success" type="button" onclick="writeValid();">작성완료</button>
-                <button class="btn btn-warning" type="reset">초기화</button>
+                <button class="btn btn-success" type="button" onclick="submitForm();">작성완료</button>
+                <button class="btn btn-warning" type="button" onclick="resetForm()">초기화</button>
                 <button class="btn btn-secondary" type="button" onclick="home();">목록으로</button>
             </div>
         </section>

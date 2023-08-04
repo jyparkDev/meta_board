@@ -1,6 +1,9 @@
 package com.meta.board.controller;
 
 import com.meta.board.domain.*;
+import com.meta.board.domain.board.Board;
+import com.meta.board.domain.board.BoardDto;
+import com.meta.board.domain.board.BoardUpdateDto;
 import com.meta.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +45,7 @@ public class BoardController {
 
         List<BoardDto> boardList = boardService.findAll((page - 1) * pageSize ,pageSize, condition);
 
+
         if(sort.equals("old_date")){
             condition.setSort("old_date");
         }
@@ -77,9 +81,6 @@ public class BoardController {
     /** 글작성 Controller */
     @PostMapping("/write")
     public String write(@ModelAttribute Board board){
-        String title = board.getTitle();
-        int length = title.getBytes().length;
-        log.info("lengh : {}",length);
         boardService.join(board);
         return "redirect:/board/list?page=1&pageSize=10&sort=create_date";
     }

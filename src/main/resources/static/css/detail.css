@@ -2,7 +2,7 @@
 /* 상세 보기 페이지 */
 .description-area{
     width: 100%;
-    border: 1px solid #eee;
+    border-bottom: 5px solid #eee;
     padding: 15px 5px;
     border-radius: 5px;
 }
@@ -35,14 +35,15 @@
 
 .back-btn-area{float: left;}
 
-.back-btn{
+.back-btn-area > button{
     border: 1px solid black;
     border-radius: 5px;
     background: white;
     padding: 0.375rem 0.375rem;
+    margin-right: 10px;
 }
 
-.back-btn:hover{
+.back-btn:hover, .reply-btn:hover{
     background-color: #eee;
 }
 .etc{
@@ -73,5 +74,16 @@
 .etc > button:hover{
     background: #eee;
     color: red;
+}
+
+.comment-area{
+    width: 100%;
+    margin-top: 50px;
+}
+
+.comment-write-area, .comment-view-area, .comment-paging{
+    width:100%;
+    border:1px solid #ccc;
+    margin-top: 30px;
 }
 

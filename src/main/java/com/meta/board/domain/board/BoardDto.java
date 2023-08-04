@@ -1,4 +1,4 @@
-package com.meta.board.domain;
+package com.meta.board.domain.board;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -13,4 +13,7 @@ public class BoardDto {
     private String content;
     private int viewNum;
     private String create_date;
+    private int comment_count;
+    private int board_group;
+    private int board_depth;
 }
