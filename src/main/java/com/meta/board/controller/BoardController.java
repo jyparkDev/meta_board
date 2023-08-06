@@ -4,7 +4,10 @@ import com.meta.board.domain.*;
 import com.meta.board.domain.board.Board;
 import com.meta.board.domain.board.BoardDto;
 import com.meta.board.domain.board.BoardUpdateDto;
+import com.meta.board.domain.comment.CommentResponseDto;
+import com.meta.board.repository.comment.CommentRepository;
 import com.meta.board.service.BoardService;
+import com.meta.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,7 @@ import java.util.Map;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
     /** 전체 조회 Controller */
     @GetMapping("/list")
@@ -64,6 +68,9 @@ public class BoardController {
                        Condition condition, Model model){
 
         BoardDto board = boardService.findOne(id);
+        Map<String, Object> result = commentService.searchList(id, 1,  new HashMap<String, Object>());
+        model.addAttribute("board",board);
+        model.addAttribute("result", result);
         model.addAttribute("board",board);
         model.addAttribute("page",page);
         model.addAttribute("pageSize", pageSize);

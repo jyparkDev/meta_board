@@ -121,12 +121,12 @@
                 </form>
             </article>
             <article class="comment-view-area" id="comment-view-area">
-                <div class="card">
+                <div class="card" th:each="c:${result.get('comments')}">
                     <div class="card-header">
-                        <div> tester</div><div class="create_date">2023-03-09</div>
+                        <div th:text="${c.writer}"></div><div class="create_date" th:text="${c.create_date}"></div>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">${content}</p>
+                        <p class="card-text" th:text="${c.content}"></p>
                         <a class="btn btn-secondary" onclick="updateComment();">수정</a>
                         <a class="btn btn-danger" onclick="removeComment()">삭제</a>
                     </div>
