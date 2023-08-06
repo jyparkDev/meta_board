@@ -19,7 +19,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
         <script>
             let passwordValid = false;
-
+            let commentValid = false;
             $(document).ready(function(){
                 $('#open-btn').click(function(e){
                     e.stopPropagation();
@@ -28,8 +28,47 @@
                 $('body').click(function (){
                     $('#etc').css("display","none");
                 });
-            });
 
+                $('#writer').on( 'keyup', function() {
+                    let size = $( '#writer' ).val();
+                    if(size.length > 20){
+                        $('#writer').val(size.substring(0,20));
+                        $('#writer').focus();
+                        alert('작성자명 20자 초과');
+                    }
+                });
+
+                $('#writer').bind('input paste', function(){
+                    $(this).trigger('keyup');
+                });
+
+                $('#passwd').on( 'keyup', function() {
+                    let size = $( '#passwd' ).val();
+                    if(size.length > 20){
+                        $('#passwd').val(size.substring(0,20));
+                        $('#passwd').focus();
+                        alert('비밀번호 20자 초과');
+                    }
+                });
+
+                $('#passwd').bind('input paste', function(){
+                    $(this).trigger('keyup');
+                });
+
+                $('#content').on( 'focus keydown', function() {
+                    let size = $( '#content' ).val();
+                    $('#count').text(size.length);
+                    if(size.length > 255){
+                        $('#content').val(size.substring(0,255));
+                        $('#content').focus();
+                        alert('255자 초과');
+                    }
+                });
+
+                $('#content').bind('input paste', function(){
+                    $(this).trigger('focus');
+                });
+            });
         </script>
     </head>
     <body>
@@ -41,6 +80,7 @@
             <h1 th:text="${board.title}">제목</h1>
             <article class="title-area">
                 <input type="hidden" id="id" th:value="${board.id}">
+                <input type="comment_page" id="c_page" value="1">
                 <div class="create-date-area">
                     <span>등록일 : </span><span th:text="${board.create_date}">0000-00-00</span>
                 </div>
@@ -70,13 +110,56 @@
         </article>
         <article class="comment-area">
             <article class="comment-write-area">
-                댓글 작성 영역
+                <form id="comment-form">
+                    <textarea id="content" name="content" class="comment-content" placeholder="댓글을 작성해주세요"></textarea>
+                    <div class="content-size">( <span id="count">0</span> / 255자 )</div>
+                    <div class="comment-info">
+                        <label>작성자명 : <input type="text" name="writer" id="writer" placeholder="20자 이내"></label>
+                        <label>PASSWORD : <input type="password" name="passwd" id="passwd" placeholder="대/소문자,숫자,특수문자 포함 8~20자"></label>
+                        <button type="button" onclick="sendComment();">등록</button>
+                    </div>
+                </form>
             </article>
-            <article class="comment-view-area">
-                댓글 View 영역
+            <article class="comment-view-area" id="comment-view-area">
+                <div class="card">
+                    <div class="card-header">
+                        <div> tester</div><div class="create_date">2023-03-09</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">${content}</p>
+                        <a class="btn btn-secondary" onclick="updateComment();">수정</a>
+                        <a class="btn btn-danger" onclick="removeComment()">삭제</a>
+                    </div>
+                </div>
             </article>
             <article class="comment-paging">
-                댓글 페이징 처리 영역
+                <nav aria-label="Page navigation example" class="page-nav">
+                    <ul class="pagination justify-content-center" id="page-area">
+                        <li class="page-item">
+                            <a class="page-link disabled" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link disabled" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link active page-num">1</a></li>
+                        <li class="page-item"><a class="page-link active page-num">2</a></li>
+                        <li class="page-item"><a class="page-link active page-num">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link disabled" aria-label="Previous">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link disabled" aria-label="Previous">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </article>
         </article>
     </section>

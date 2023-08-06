@@ -109,3 +109,8 @@
     margin-right: 10px;
 }
 
+
+/* 댓글 영역*/
+.comment-writer-area{
+    width: 50% !important;
+}

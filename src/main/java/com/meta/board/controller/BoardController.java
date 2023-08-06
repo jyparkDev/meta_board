@@ -116,8 +116,8 @@ public class BoardController {
     @ResponseBody
     public Map<String , String> passwordCheck(@RequestBody PassWordRequestDto passWordRequestDto, HttpServletResponse res){
         Map<String , String> result = new HashMap<>();
-        log.info("log : {},{}",passWordRequestDto.getPassword(),passWordRequestDto.getId());
-        if(!boardService.validPassWord(passWordRequestDto.getId(), passWordRequestDto.getPassword())){
+        log.info("log : {},{}",passWordRequestDto.getPasswd(),passWordRequestDto.getId());
+        if(!boardService.validPassWord(passWordRequestDto.getId(), passWordRequestDto.getPasswd())){
             res.setStatus(HttpStatus.BAD_REQUEST.value());
         }
         result.put("status","OK");

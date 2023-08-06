@@ -78,12 +78,84 @@
 
 .comment-area{
     width: 100%;
-    margin-top: 50px;
+    margin-top: 80px;
 }
 
 .comment-write-area, .comment-view-area, .comment-paging{
     width:100%;
-    border:1px solid #ccc;
     margin-top: 30px;
 }
+.comment-write-area{
+    border:1px solid #ccc;
+}
+.comment-write-area{
+    border-radius: 5px;
+    padding:5px;
+}
 
+.comment-content{
+    border:none;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 12px;
+    resize: none;
+}
+
+label{
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+.content-size{
+    text-align: right;
+    font-size:12px;
+}
+
+#writer{
+    width: 270px;
+}
+
+#passwd{
+    width: 230px;
+}
+.comment-info{
+    margin-top: 10px;
+}
+.comment-info > button{
+    background-color: #3f2929;
+    color: #fff;
+    border:1px solid #3f2929;
+    padding:6px 15px;
+    border-radius: 5px;
+    font-size:12px;
+    float: right;
+}
+
+.page-item{margin: 0 5px;}
+.page-num{border: none !important;}
+.pagination {--bs-pagination-active-bg: #7b9dbb !important;}
+.page-link{color : #0a0c9e !important;}
+
+
+.cursor{
+    cursor: pointer;
+}
+.card{
+    margin-top: 30px;
+}
+.card-header > div{
+    display: inline-block;
+}
+
+.create_date{
+    float:right;
+}
+
+.card-body > a{
+    color:#fff !important;
+    padding: 1px 10px;
+    margin-right: 5px;
+}

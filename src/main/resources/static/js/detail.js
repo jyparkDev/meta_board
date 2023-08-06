@@ -78,3 +78,231 @@ function open_etc(){
 function close_all(){
     $('#etc').css("display","none");
 }
+
+
+
+
+// 댓글 기능
+
+// 댓글 작성
+function sendComment(){
+    let content = $('#content').val().trim();
+    let writer = $('#writer').val().trim();
+    let pw = $('#passwd').val().trim();
+
+    if(content.replaceAll([' '],'').length == 0){
+        alert('댓글을 작성해주세요');
+        $('#content').focus();
+        return;
+    }
+    if(writer.replaceAll([' '],'').length == 0){
+        alert('작성자가 비었습니다');
+        $('#writer').focus();
+        return;
+    }
+
+    var num = pw.search(/[0-9]/g);
+    var eng = pw.search(/[a-z]/ig);
+    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    if((pw.length < 8 || pw.length > 20) || (num < 0 || eng < 0 || spe < 0)){
+        alert("비밀번호 영문,숫자, 특수문자 혼합(8-20자)");
+        $('#passwd').focus();
+        return false;
+    }
+    if(pw.search(/\s/) != -1){
+        alert("비밀번호는 공백 없이 입력해주세요.");
+        $('#passwd').focus();
+        return false;
+    }
+
+    $('#writer').val(writer.trim());
+    $('#content').val(content.trim());
+
+    let id = $('#id').val()
+    $.ajax({
+        type: "POST",
+        url: "/comment/write",
+        data: JSON.stringify({id: id,passwd: pw, content: content, writer: writer}),
+        contentType: 'application/json',
+        dataType : "json",
+        success: function (res) {
+            let pagehandler = res['page'];
+
+            // 페이지 생성
+            drawPage(pagehandler);
+
+            $('#writer').val('');
+            $('#content').val('');
+            $('#passwd').val('');
+        },
+        error: function (){
+        }
+    });
+}
+
+
+
+
+// 댓글 생성
+function drawComment(comments){
+    $('#comment-view-area').empty();
+    console.log(comments);
+    let tmp_html = ``;
+    for(var i = 0 ; i < comments.length; i++){
+        let writer = comments[i]['writer'];
+        let content = comments[i]['content'];
+        let create_date = comments[i]['create_date'];
+        let id = comments[i]['id'];
+        tmp_html += `<div class="card">
+                                    <div class="card-header">
+                                        <div>${writer}</div>
+                                        <div class="create_date">${create_date}</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">${content}</p>
+                                        <a class="btn btn-secondary" onclick="updateComment(${id});">수정</a>
+                                        <a class="btn btn-danger" onclick="removeComment(${id})">삭제</a>
+                                    </div>
+                                </div>`
+    }
+    $('#comment-view-area').html(tmp_html);
+
+}
+
+
+// 페이지네이션 생성
+function drawPage(pagehandler){
+    $('#page-area').empty();
+    let tmp_html = ``;
+    tmp_html += pagehandler['first']
+        ? `<li class="page-item cursor" onclick="commentPage(1)">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                               </li>`
+        : `<li class="page-item">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>`;
+    tmp_html += pagehandler['prev']
+        ? `<li class="page-item cursor">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&lt;</span>
+                                    </a>
+                                </li>`
+        : `<li class="page-item">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&lt;</span>
+                                    </a>
+                                </li>`;
+    let page = pagehandler['page'];
+
+    for(let i = pagehandler['beginPage'] ; i <= pagehandler['endPage']; i++){
+        if (page == i){
+            tmp_html += `<li class="page-item"><a class="page-link active page-num">
+                                            ${i}</a></li>`;
+        }else{
+            tmp_html += `<li class="page-item" onclick="commentPage(${i})"><a class="page-link page-num cursor">
+                                            ${i}</a></li>`;
+        }
+    }
+    tmp_html += pagehandler['next']
+        ? `<li class="page-item cursor">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&gt;</span>
+                                    </a>
+                                </li>`
+        : `<li class="page-item">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&gt;</span>
+                                    </a>
+                                </li>`;
+
+    tmp_html += pagehandler['end']
+        ? `<li class="page-item cursor" onclick="commentPage(${pagehandler['totalPage']})">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>`
+        : `<li class="page-item">
+                                    <a class="page-link disabled" aria-label="Previous">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>`;
+    $('#page-area').html(tmp_html);
+}
+
+// 페이지 별 댓글 처리
+function commentPage(page){
+    let id = $("#id").val();
+    $.ajax({
+        type: "GET",
+        url: "/comment/search?page="+page+"&id="+id,
+        success: function (res) {
+            let comments = res['comments'];
+            let pagehandler = res['page'];
+            drawComment(comments);
+            drawPage(pagehandler);
+
+            $('#c_page').val(pagehandler['page']);
+        },
+        error: function (){
+        }
+    });
+}
+
+// 댓글 수정
+function updateComment(id){
+    let c_page = $('#c_page').val();
+    if(commentPasswordCheck()){
+
+    }
+}
+
+
+// 댓글 삭제
+function removeComment(c_id){
+    let c_page = $('#c_page').val();
+    let id = $('#id').val();
+    if(commentPasswordCheck(c_id)){
+        var isDelete = confirm("해당 댓글을 삭제하시겠습니까?");
+        if (isDelete){
+            $.ajax({
+                type: "GET",
+                url: "/comment/delete?id="+id+"&page="+c_page+"&c_id="+c_id,
+                success: function (res) {
+                    drawComment(comments);
+                    drawPage(pagehandler);
+                    $('#c_page').val(pagehandler['page']);
+                }
+            });
+        }
+    }
+}
+
+function commentPasswordCheck(id){
+    let passwd = prompt("비밀번호를 입력해주세요?");
+    if(passwd.replaceAll([' '],'').length == 0){
+        alert("패스워드를 입력해주세요");
+        commentPasswordCheck(id);
+    }
+    $.ajax({
+        type: "POST",
+        url: "/comment/passwdCheck",
+        async : false,
+        data: JSON.stringify({passwd : passwd, id: id }),
+        contentType: 'application/json',
+        dataType : "json",
+        success: function (res) {
+            alert(res);
+            if(res === "ok"){
+                alert("패스워드 일치");
+                return true;
+            }
+            alert("패스워드 불일치");
+            return false;
+        },
+
+    });
+}

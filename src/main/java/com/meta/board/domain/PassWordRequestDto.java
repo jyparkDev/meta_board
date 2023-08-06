@@ -11,5 +11,5 @@ import lombok.ToString;
 @ToString
 public class PassWordRequestDto {
     private Long id;
-    private String password;
+    private String passwd;
 }
