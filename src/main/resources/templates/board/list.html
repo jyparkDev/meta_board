@@ -108,12 +108,12 @@
                                 </th:block>
                                 <span><img src="/image/reply.svg" alt="reply" class="reply-icon"></span>
                             </th:block>
-                            <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},sort=${condition.sort}, dir=${condition.dir})}"
+                            <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},sort=${condition.sort}, scroll=false,dir=${condition.dir})}"
                                    th:text="${board.title}"></a>
                         </td>
                         <td id="comment-count">(
                             <th:block th:if="${board.comment_count} > 0">
-                                <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},sort=${condition.sort}, dir=${condition.dir})}"
+                                <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},scroll=true,sort=${condition.sort}, dir=${condition.dir})}"
                                     th:text="${board.comment_count}"></a>
                             </th:block>
                             <th:block th:if="${board.comment_count} == 0">

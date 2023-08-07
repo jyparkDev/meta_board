@@ -16,4 +16,5 @@ public class BoardDto {
     private int comment_count;
     private int board_group;
     private int board_depth;
+    private int exist;
 }

@@ -30,7 +30,7 @@ public interface BoardMapper {
     void updateBoardGroup(Long id, Long board_group);
 
     /* 게시글 삭제 QUERY */
-    @Delete("DELETE FROM BOARD WHERE id=#{id}")
+    @Update("UPDATE BOARD SET TITLE='삭제된 게시글입니다', CONTENT='작성자에 의해 삭제된 글입니다.', EXIST = 0 WHERE id=#{id}")
     void delete(@Param("id") Long id);
 
     /* TEST 용도 QUERY*/

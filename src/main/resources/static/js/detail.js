@@ -1,4 +1,19 @@
-
+// 페이지 로딩 시 처리
+function existCheck(){
+    let exist = $('#exist').val();
+    if (exist === 0){
+        $('#comment-write-area').css({'border':'none','padding':'0px'});
+        $('#comment-write-area').empty();
+        $('.empty-comment').empty();
+        $('.empty-comment').css('border','none');
+    }
+}
+function scrollCheck(){
+    var scroll = $('#scroll').val();
+    if(scroll === 'true'){
+        window.location.href = "#comment-count";
+    }
+}
 
 // 삭제 기능
 function postDelete(){
@@ -9,14 +24,14 @@ function postDelete(){
     delMessage();
 }
 function deletePasswordCheck(){
-    let password = prompt("비밀번호를 입력해주세요?");
-    if(password == null)
+    let passwd = prompt("비밀번호를 입력해주세요?");
+    if(passwd == null)
         return;
     let id = $("#id").val();
     $.ajax({
         type: "POST",
         url: "/board/passwd-check",
-        data: JSON.stringify({password: password,id: id}),
+        data: JSON.stringify({passwd: passwd,id: id}),
         contentType: 'application/json',
         dataType : "json",
         success: function (response) {
@@ -46,14 +61,14 @@ function update(){
 }
 
 function updatePasswordCheck(){
-    let password = prompt("비밀번호를 입력해주세요?");
-    if(password == null)
+    let passwd = prompt("비밀번호를 입력해주세요?");
+    if(passwd == null)
         return;
     let id = $("#id").val();
     $.ajax({
         type: "POST",
         url: "/board/passwd-check",
-        data: JSON.stringify({password: password,id: id}),
+        data: JSON.stringify({passwd: passwd,id: id}),
         contentType: 'application/json',
         dataType : "json",
         success: function (response) {
@@ -127,8 +142,10 @@ function sendComment(){
         dataType : "json",
         success: function (res) {
             let pagehandler = res['page'];
+            let comments = res['comments'];
 
             // 페이지 생성
+            drawComment(comments);
             drawPage(pagehandler);
 
             $('#writer').val('');
@@ -146,7 +163,6 @@ function sendComment(){
 // 댓글 생성
 function drawComment(comments){
     $('#comment-view-area').empty();
-    console.log(comments);
     let tmp_html = ``;
     for(var i = 0 ; i < comments.length; i++){
         let writer = comments[i]['writer'];
@@ -160,13 +176,12 @@ function drawComment(comments){
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text">${content}</p>
-                                        <a class="btn btn-secondary" onclick="updateComment(${id});">수정</a>
+<!--                                        <a class="btn btn-secondary" onclick="updateComment(${id});">수정</a>-->
                                         <a class="btn btn-danger" onclick="removeComment(${id})">삭제</a>
                                     </div>
                                 </div>`
     }
     $('#comment-view-area').html(tmp_html);
-
 }
 
 
@@ -231,6 +246,7 @@ function drawPage(pagehandler){
                                     </a>
                                 </li>`;
     $('#page-area').html(tmp_html);
+    $('#comment-count').text(pagehandler['totalCnt']);
 }
 
 // 페이지 별 댓글 처리
@@ -246,6 +262,7 @@ function commentPage(page){
             drawPage(pagehandler);
 
             $('#c_page').val(pagehandler['page']);
+            window.location.href = "#comment-count"
         },
         error: function (){
         }
@@ -253,9 +270,10 @@ function commentPage(page){
 }
 
 // 댓글 수정
-function updateComment(id){
+function updateComment(c_id){
     let c_page = $('#c_page').val();
-    if(commentPasswordCheck()){
+    let id = $('#id').val();
+    if(commentPasswordCheck(c_id)){
 
     }
 }
@@ -272,9 +290,23 @@ function removeComment(c_id){
                 type: "GET",
                 url: "/comment/delete?id="+id+"&page="+c_page+"&c_id="+c_id,
                 success: function (res) {
-                    drawComment(comments);
-                    drawPage(pagehandler);
+                    let comments = res['comments'];
+                    let pagehandler = res['page'];
                     $('#c_page').val(pagehandler['page']);
+                    if (pagehandler['totalCnt'] > 0){
+                        drawComment(comments);
+                        drawPage(pagehandler);
+                    } else{
+                        let tmp_html =
+                            `<div class="empty-comment">
+                                <span class="material-symbols-outlined">mode_comment</span><span>첫 번째 댓글을 작성해보세요.</span>
+                            </div>`;
+
+                        $('#page-area').empty();
+                        $('#comment-view-area').empty();
+                        $('#comment-view-area').html(tmp_html);
+
+                    }
                 }
             });
         }
@@ -282,27 +314,30 @@ function removeComment(c_id){
 }
 
 function commentPasswordCheck(id){
+    let isSuccess = false;
     let passwd = prompt("비밀번호를 입력해주세요?");
-    if(passwd.replaceAll([' '],'').length == 0){
+    if(passwd.replaceAll([' '],'').length === 0){
         alert("패스워드를 입력해주세요");
         commentPasswordCheck(id);
     }
     $.ajax({
         type: "POST",
         url: "/comment/passwdCheck",
-        async : false,
+        async: false,
         data: JSON.stringify({passwd : passwd, id: id }),
         contentType: 'application/json',
         dataType : "json",
         success: function (res) {
-            alert(res);
-            if(res === "ok"){
-                alert("패스워드 일치");
-                return true;
+            if(res['msg'] !== "ok"){
+                alert("패스워드 불일치");
+                commentPasswordCheck(id);
+            }else {
+                isSuccess = true;
             }
-            alert("패스워드 불일치");
-            return false;
         },
-
     });
+    return isSuccess;
 }
+
+
+

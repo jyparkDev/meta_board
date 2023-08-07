@@ -24,7 +24,6 @@ public class CommentController {
     public Map<String, Object> write(@RequestBody CommentRequestDto commentRequestDto){
         Map<String, Object> model = new HashMap<>();
         commentService.join(commentRequestDto,model);
-        log.info("m : {}", model.entrySet());
         return model;
     }
 
@@ -34,19 +33,19 @@ public class CommentController {
         Map<String, Object> model = new HashMap<>();
 
         commentService.searchList(id,page,model);
-        log.info("m : {}", model.entrySet());
         return model;
     }
 
     @PostMapping("/passwdCheck")
     @ResponseBody
-    public String passwordCheck(@RequestBody PassWordRequestDto passWordRequestDto){
+    public Map<String, String> passwordCheck(@RequestBody PassWordRequestDto passWordRequestDto){
+        Map<String,String> model = new HashMap<>();
         if(!commentService.passwdCheck(passWordRequestDto.getId(),passWordRequestDto.getPasswd())){
-            log.info("start : {}","fail");
-            return "fail";
+            model.put("msg","fail");
+            return model;
         }
-        log.info("start : {}","ok");
-        return "ok";
+        model.put("msg","ok");
+        return model;
     }
 
     @GetMapping("/delete")
@@ -56,7 +55,6 @@ public class CommentController {
         Map<String, Object> model = new HashMap<>();
 
         commentService.removeComment(id,page,commentId,model);
-        log.info("m : {}", model.entrySet());
 
         return model;
     }

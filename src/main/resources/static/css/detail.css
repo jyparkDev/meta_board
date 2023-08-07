@@ -78,7 +78,7 @@
 
 .comment-area{
     width: 100%;
-    margin-top: 80px;
+    margin-top: 100px;
 }
 
 .comment-write-area, .comment-view-area, .comment-paging{
@@ -158,4 +158,26 @@ label{
     color:#fff !important;
     padding: 1px 10px;
     margin-right: 5px;
+}
+.empty-comment{
+    padding: 30px 35%;
+    border: 1px solid #eee;
+}
+.empty-comment > span{
+    font-size: 25px;
+    text-align: center;
+}
+.comment-count{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    font-size: 17px;
+}
+
+.card-text{
+    display: inline;
+}
+
+.btn-danger{
+    display: inline;
+    float:right;
 }

@@ -7,6 +7,7 @@ import com.meta.board.domain.Condition;
 import com.meta.board.mapper.BoardMapper;
 import com.meta.board.repository.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class BoardService {
 
     private final BoardRepository boardRepository;
@@ -51,15 +53,14 @@ public class BoardService {
     }
 
     public void deleteBoard(Long id){
-        String OriginPassWord = boardRepository.passwordCheck(id);
         boardRepository.deleteBoard(id);
     }
 
     public boolean validPassWord(Long id, String target){
 
         String OriginPassWord = boardRepository.passwordCheck(id);
+
         if(!passwordEncoder.matches(target, OriginPassWord)){
-            System.out.println("Aaa");
             return false;
         }
         return true;

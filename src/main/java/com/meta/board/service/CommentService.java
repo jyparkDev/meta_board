@@ -63,7 +63,7 @@ public class CommentService {
 
         int totalCount = commentRepository.count(board_id);
 
-        PageHandler pageHandler = new PageHandler(totalCount,page,5);
+        PageHandler pageHandler = new PageHandler(totalCount, page,5);
 
         List<CommentResponseDto> comments = commentRepository.findAllByBoardId(board_id, (pageHandler.getPage() - 1) * pageHandler.getPageSize(), pageHandler.getPageSize());
         model.put("comments",comments);

@@ -65,17 +65,17 @@ public class BoardController {
     @GetMapping("/view")
     public String view(Long id,
                        int page, int pageSize,
-                       Condition condition, Model model){
+                       Condition condition, Model model, boolean scroll){
 
         BoardDto board = boardService.findOne(id);
         Map<String, Object> result = commentService.searchList(id, 1,  new HashMap<String, Object>());
-        model.addAttribute("board",board);
+        log.info("scroll : {}", scroll);
         model.addAttribute("result", result);
         model.addAttribute("board",board);
         model.addAttribute("page",page);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("condition",condition);
-
+        model.addAttribute("scroll",scroll);
         return "/board/detail";
     }
 
@@ -123,7 +123,6 @@ public class BoardController {
     @ResponseBody
     public Map<String , String> passwordCheck(@RequestBody PassWordRequestDto passWordRequestDto, HttpServletResponse res){
         Map<String , String> result = new HashMap<>();
-        log.info("log : {},{}",passWordRequestDto.getPasswd(),passWordRequestDto.getId());
         if(!boardService.validPassWord(passWordRequestDto.getId(), passWordRequestDto.getPasswd())){
             res.setStatus(HttpStatus.BAD_REQUEST.value());
         }
