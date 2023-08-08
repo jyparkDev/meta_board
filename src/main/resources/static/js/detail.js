@@ -1,7 +1,9 @@
 // 페이지 로딩 시 처리
 function existCheck(){
     let exist = $('#exist').val();
-    if (exist === 0){
+    console.log(exist);
+    if (exist === '0'){
+        console.log(exist);
         $('#comment-write-area').css({'border':'none','padding':'0px'});
         $('#comment-write-area').empty();
         $('.empty-comment').empty();

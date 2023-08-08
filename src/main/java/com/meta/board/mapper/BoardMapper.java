@@ -14,8 +14,9 @@ import java.util.List;
 @Component
 public interface BoardMapper {
     /* 게시글 등록 QUERY*/
-    @Insert("INSERT INTO BOARD(title,content,writer,passwd,create_date,modified_date) " +
-            "VALUES(#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now())")
+    @Insert("INSERT INTO BOARD(title,content,writer,passwd,create_date,modified_date,board_group) " +
+            "VALUES(#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now()," +
+            "(select ifnull(max(l.board_group) + 1,1) from board l))")
     void save(@Param("board") Board board);
 
     /* 게시글 수정 QUERY*/
@@ -43,7 +44,7 @@ public interface BoardMapper {
 //            "(select count(*) from comments c where B.id = c.board_id) as comment_count from board B, " +
 //            "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
 //            "order by ${condition.sort} ${condition.dir}, id ${condition.dir}) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}")
-    @Select("SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, B.board_depth, " +
+    @Select("SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, B.board_depth, B.board_group_order, " +
             "(select count(*) from comments c where B.id = c.board_id) as comment_count from board B, " +
             "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
             "order by BOARD_GROUP ${condition.dir}, BOARD_GROUP_ORDER desc) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}")

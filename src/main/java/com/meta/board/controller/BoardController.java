@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -68,14 +69,15 @@ public class BoardController {
                        Condition condition, Model model, boolean scroll){
 
         BoardDto board = boardService.findOne(id);
+
         Map<String, Object> result = commentService.searchList(id, 1,  new HashMap<String, Object>());
-        log.info("scroll : {}", scroll);
         model.addAttribute("result", result);
         model.addAttribute("board",board);
         model.addAttribute("page",page);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("condition",condition);
         model.addAttribute("scroll",scroll);
+
         return "/board/detail";
     }
 
@@ -87,7 +89,8 @@ public class BoardController {
 
     /** 글작성 Controller */
     @PostMapping("/write")
-    public String write(@ModelAttribute Board board){
+    public String write(@ModelAttribute Board board,@RequestParam(required = false, name = "file") List<MultipartFile> file ){
+        log.info("singleFile : {}" ,file );
         boardService.join(board);
         return "redirect:/board/list?page=1&pageSize=10&sort=create_date";
     }

@@ -19,7 +19,17 @@
             $( document ).ready( function() {
                 $('#title').focus();
                 inputCheck();
+
+                $(document).on("click", ".remove-upload-form", function() {
+                    $(this).parent().remove();
+                    let length = $("#upload-forms").children().length - 1;
+                    if (length === 0){
+                        $('#file-msg').css('display','block');
+                    }
+                });
+
             });
+
             function submitForm(){
                 if(writeValid()){
                     dataTrim();
@@ -29,6 +39,23 @@
                     form.submit();
                 }
             }
+
+            function addFile(){
+                $('#file-msg').css('display','none');
+                let newUploadForm = '<div class="upload-form">' +
+                    '<input type="file" name="file" class="upload-name"/>' +
+                    '<button class="btn btn-danger remove-upload-form">삭제</button>' +
+                    '</div>';
+                $("#upload-forms").append(newUploadForm);
+            }
+
+            function allFileRemove(){
+                $("#upload-forms").empty();
+                tmp_html = `<div class="upload-form">
+                        <span id="file-msg">파일을 업로드해주세요</span>
+                    </div>`
+                $("#upload-forms").html(tmp_html);
+            }
         </script>
     </head>
     <body>
@@ -36,7 +63,7 @@
             <h2>작성하기</h2>
         </header>
         <section class="contains">
-            <form id="submit-form">
+            <form id="submit-form" enctype="multipart/form-data">
                 <div class="input-group mb-3 title-area">
                     <span class="input-group-text" >제목</span>
                     <input type="text" class="form-control" aria-label="Sizing example input" 
@@ -65,6 +92,13 @@
                 </div>
                 <div>
                     ( <span id='count'>0</span> / 500자 )
+                </div>
+                <button class="btn btn-secondary" id="add-upload-form" type="button" onclick="addFile()">+</button>
+                <button class="btn btn-danger" id="all-remove-form" type="button" onclick="allFileRemove()">전체삭제</button>
+                <div id="upload-forms" class="upload-forms">
+                    <div class="upload-form">
+                        <span id="file-msg">파일을 업로드해주세요</span>
+                    </div>
                 </div>
             </form>
             <div class="btn-area">

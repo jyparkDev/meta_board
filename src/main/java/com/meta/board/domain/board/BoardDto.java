@@ -15,6 +15,7 @@ public class BoardDto {
     private String create_date;
     private int comment_count;
     private int board_group;
+    private int board_group_order;
     private int board_depth;
     private int exist;
 }

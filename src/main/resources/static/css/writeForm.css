@@ -25,3 +25,22 @@
 .btn-area > button{
     margin-right: 10px;
 }
+
+#upload-forms{
+    border:1px solid #ddd;
+    padding: 10px;
+}
+
+.upload-form{
+    margin-bottom: 10px;
+}
+
+.upload-form > span{
+    text-align: center;
+    display: block;
+    padding: 30px 0;
+}
+
+#add-upload-form{
+    margin: 15px 0;
+}

@@ -32,9 +32,9 @@ public class BoardService {
 
         boardRepository.save(board);
 
-        Long findBoardId = boardRepository.findBoardId();
+/*        Long findBoardId = boardRepository.findBoardId();
 
-        boardRepository.updateBoardGroup(findBoardId,findBoardId);
+        boardRepository.updateBoardGroup(findBoardId,findBoardId);*/
     }
 
     @Transactional(readOnly = true)

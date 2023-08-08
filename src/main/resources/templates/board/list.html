@@ -37,6 +37,7 @@
             let form = $('#send');
             form.submit();
         }
+
     </script>
 </head>
 <body>
@@ -47,6 +48,7 @@
         <!-- 게시판 상단 기능-->
         <article class="list-top-area">
             <input type="hidden" id="key" th:value="${condition.keyword}">
+            <input type="hidden" id="rnum" th:value="${4}">
             <form action="/board/list" id="send">
                 <div class="sort-area">
                     <select class="form-select form-select-sm sorted" aria-label="Default select example" name="sort" onchange="changeSort();">
@@ -98,9 +100,14 @@
                         <td colspan="6">게시글이 존재하지 않습니다.</td>
                     </tr>
                 </th:block>
-                <th:block th:if="${boards.size() > 0}">
+                <th:block th:if="${boards.size() > 0}" >
                     <tr th:each="board:${boards}">
-                        <th scope="row" th:text="${board.rnum}"></th>
+                        <th:block th:if="${board.board_group_order} == 0">
+                            <th scope="row"></th>
+                        </th:block>
+                        <th:block th:if="${board.board_group_order} > 0">
+                            <th scope="row"></th>
+                        </th:block>
                         <td id="title" th:with="end=${board.board_depth} - 1">
                             <th:block th:if="${end} >= 0">
                                 <th:block  th:each="p: ${#numbers.sequence(0,end)}">
