@@ -114,3 +114,18 @@
 .comment-writer-area{
     width: 50% !important;
 }
+
+.excel-form{
+    float:right;
+    margin-right: 10px;
+}
+
+.excel-form > button{
+    background-color: #4f914f;
+    color: #fff;
+}
+
+.excel-form > button:hover{
+    background-color: #4f914f;
+    color: #fff;
+}

@@ -77,6 +77,9 @@
                 <button id="write-btn" class="btn btn-light" onclick="writeForm()">글쓰기</button>
                 <button id="list-btn" class="btn btn-light" onclick="home()">목록으로</button>
             </div>
+            <form action="/excel/download" method="get" id="excel-form" class="excel-form">
+                <button id="excel" class="btn btn-light" type="submit">excel</button>
+            </form>
         </article>
         <th:block th:if="!${condition.keyword.equals('')}">
             <div class="search-word"> 검색어 : <span th:text="${condition.keyword}"></span></div>

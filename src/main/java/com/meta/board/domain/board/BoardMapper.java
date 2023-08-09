@@ -45,6 +45,10 @@ public interface BoardMapper {
             "order by BOARD_GROUP ${condition.dir}, BOARD_GROUP_ORDER desc) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}")
     List<BoardDto> findAll(@Param("offset") int offset, @Param("pageSize") int pageSize, Condition condition);
 
+    @Select("SELECT * FROM BOARD")
+    List<BoardDto> findAllForExcel();
+
+
     /* 단일 게시글 조회 QUERY */
     @Select("SELECT * FROM BOARD WHERE id=#{id}")
     BoardDto findOne(@Param("id") Long id);
@@ -66,4 +70,6 @@ public interface BoardMapper {
 
     @Select("SELECT BOARD_GROUP, BOARD_GROUP_ORDER, BOARD_DEPTH FROM BOARD WHERE ID = #{id}")
     ReplyMakeInfoDto findInfoForMakeReply(Long id);
+
+
 }

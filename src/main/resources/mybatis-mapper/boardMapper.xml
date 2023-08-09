@@ -8,5 +8,4 @@
         values (#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now(),
         (select ifnull(max(l.board_group) + 1,1) from board l))
     </insert>
-
 </mapper>
