@@ -43,7 +43,7 @@
             function addFile(){
                 $('#file-msg').css('display','none');
                 let newUploadForm = '<div class="upload-form">' +
-                    '<input type="file" name="file" class="upload-name"/>' +
+                    '<input type="file" name="files" class="upload-name"/>' +
                     '<button class="btn btn-danger remove-upload-form">삭제</button>' +
                     '</div>';
                 $("#upload-forms").append(newUploadForm);
@@ -63,7 +63,7 @@
             <h2>작성하기</h2>
         </header>
         <section class="contains">
-            <form id="submit-form" enctype="multipart/form-data">
+            <form id="submit-form" autocomplete="off" enctype="multipart/form-data">
                 <div class="input-group mb-3 title-area">
                     <span class="input-group-text" >제목</span>
                     <input type="text" class="form-control" aria-label="Sizing example input" 

@@ -174,7 +174,7 @@ function drawComment(comments){
         tmp_html += `<div class="card">
                                     <div class="card-header">
                                         <div>${writer}</div>
-                                        <div class="create_date">${create_date}</div>
+                                        <div class="create_date">${createDate}</div>
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text">${content}</p>

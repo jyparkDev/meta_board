@@ -102,34 +102,35 @@
                 </th:block>
                 <th:block th:if="${boards.size() > 0}" >
                     <tr th:each="board:${boards}">
-                        <th:block th:if="${board.board_group_order} == 0">
+                        <th:block th:if="${board.boardGroupOrder} == 0">
                             <th scope="row"></th>
                         </th:block>
-                        <th:block th:if="${board.board_group_order} > 0">
+                        <th:block th:if="${board.boardGroupOrder} > 0">
                             <th scope="row"></th>
                         </th:block>
-                        <td id="title" th:with="end=${board.board_depth} - 1">
+                        <td id="title" th:with="end=${board.boardDepth} - 1">
                             <th:block th:if="${end} >= 0">
                                 <th:block  th:each="p: ${#numbers.sequence(0,end)}">
                                     &nbsp;
                                 </th:block>
                                 <span><img src="/image/reply.svg" alt="reply" class="reply-icon"></span>
                             </th:block>
-                            <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},sort=${condition.sort}, scroll=false,dir=${condition.dir})}"
-                                   th:text="${board.title}"></a>
+                            <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},
+                            sort=${condition.sort}, scroll=false,dir=${condition.dir})}" th:text="${board.title}"></a>
                         </td>
                         <td id="comment-count">(
-                            <th:block th:if="${board.comment_count} > 0">
-                                <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},scroll=true,sort=${condition.sort}, dir=${condition.dir})}"
-                                    th:text="${board.comment_count}"></a>
+                            <th:block th:if="${board.commentCount} > 0">
+                                <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},
+                                scroll=true,sort=${condition.sort}, dir=${condition.dir})}"
+                                    th:text="${board.commentCount}"></a>
                             </th:block>
-                            <th:block th:if="${board.comment_count} == 0">
-                                <a th:text="${board.comment_count}"></a>
+                            <th:block th:if="${board.commentCount} == 0">
+                                <a th:text="${board.commentCount}"></a>
                             </th:block>
                             )
                         </td>
                         <td id="writer" th:text="${board.writer}"></td>
-                        <td th:text="${board.create_date}"></td>
+                        <td th:text="${board.createDate}"></td>
                         <td th:text="${board.viewNum}"></td>
                     </tr>
                 </th:block>
@@ -143,8 +144,8 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
                             <th:block th:if="${ph.first}">
-                                <a class="page-link" th:href="@{/board/list(page=${1},pageSize=${ph.pageSize},sort=${condition.sort}, dir=${condition.dir})}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
+                                <a class="page-link" th:href="@{/board/list(page=${1},pageSize=${ph.pageSize},sort=${condition.sort}, dir=${condition.dir})}"
+                                   aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </th:block>
                             <th:block th:if="${!ph.first}">

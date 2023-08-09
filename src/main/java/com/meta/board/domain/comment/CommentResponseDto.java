@@ -12,6 +12,6 @@ public class CommentResponseDto {
     private Long id;
     private String writer;
     private String content;
-    private String create_date;
-    private Long board_id;
+    private String createDate;
+    private Long boardId;
 }

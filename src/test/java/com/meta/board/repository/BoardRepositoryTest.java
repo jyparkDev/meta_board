@@ -1,8 +1,8 @@
 //package com.meta.board.repository;
 //
-//import com.meta.board.domain.board.Board;
+//import com.meta.board.repository.board.Board;
 //import com.meta.board.domain.board.BoardDto;
-//import com.meta.board.mapper.BoardMapper;
+//import com.meta.board.domain.board.BoardMapper;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

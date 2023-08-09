@@ -89,7 +89,7 @@
             <input type="hidden" id="exist" th:value="${board.exist}">
             <input type="hidden" id="scroll" th:value="${scroll}">
             <div class="create-date-area">
-                <span>등록일 : </span><span th:text="${board.create_date}">0000-00-00</span>
+                <span>등록일 : </span><span th:text="${board.createDate}">0000-00-00</span>
             </div>
             <div class="writer-area">
                 <span>작성자 : </span><span th:text="${board.writer}">홍길동</span>
@@ -145,7 +145,7 @@
                 <div class="card" th:each="c:${result.get('comments')}">
                     <div class="card-header">
                         <div th:text="${c.writer}"></div>
-                        <div class="create_date" th:text="${c.create_date}"></div>
+                        <div class="create_date" th:text="${c.createDate}"></div>
                     </div>
                     <div class="card-body">
                         <p class="card-text" th:text="${c.content}"></p>

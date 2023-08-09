@@ -1,10 +1,8 @@
-package com.meta.board.mapper;
+package com.meta.board.domain.board;
 
-import com.meta.board.domain.board.Board;
-import com.meta.board.domain.board.BoardDto;
-import com.meta.board.domain.board.BoardUpdateDto;
 import com.meta.board.domain.Condition;
 import com.meta.board.domain.reply.ReplyMakeInfoDto;
+import com.meta.board.model.Board;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +12,7 @@ import java.util.List;
 @Component
 public interface BoardMapper {
     /* 게시글 등록 QUERY*/
-    @Insert("INSERT INTO BOARD(title,content,writer,passwd,create_date,modified_date,board_group) " +
-            "VALUES(#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now()," +
-            "(select ifnull(max(l.board_group) + 1,1) from board l))")
-    void save(@Param("board") Board board);
+    int save(@Param("board") Board board);
 
     /* 게시글 수정 QUERY*/
     @Update("UPDATE BOARD SET title=#{board.title}, content=#{board.content}, writer=#{board.writer}, modified_date=now() WHERE id=#{id}")

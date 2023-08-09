@@ -14,3 +14,83 @@ create table comments(
 ) charset=utf8;
 
 desc comments;
+
+
+use test;
+
+-- 테이블 제거
+drop table board;
+drop table comments;
+
+-- 테이블 생성
+create table board(
+	id int primary key AUTO_INCREMENT,
+    title varchar(50) not null,
+    writer varchar(20) not null,
+    passwd varchar(255) not null,
+    content varchar(500) not null,
+    create_date date,
+    modified_date date,
+    board_group int default 0,
+    board_group_order int default 0,
+    board_depth int default 0,
+    view_num int default 0,
+    exist boolean default 1
+) charset=utf8;
+
+
+create table comments(
+	id int primary key AUTO_INCREMENT,
+    content varchar(255) not null,
+    writer varchar(20) not null,
+    passwd varchar(255) not null,
+    create_date date,
+    modified_date date,
+    board_id int not null,
+    foreign key(board_id) references board(id) on delete cascade
+) charset=utf8;
+
+
+CREATE TABLE files (
+	id int primary key AUTO_INCREMENT,
+    board_id int NOT NULL,
+    original_name varchar(255) NOT NULL,
+    save_name varchar(40) NOT NULL,
+    size int(11) NOT NULL,
+    delete_yn tinyint(1) NOT NULL,
+    created_date datetime NOT NULL DEFAULT current_timestamp(),
+    deleted_date datetime DEFAULT NULL,
+	foreign key(board_id) references board(id) on delete cascade
+    ) charset=utf8;
+
+-- 테이블 구조 조회
+show tables;
+desc board;
+desc comments;
+
+
+-- 테이블 조회
+select * from board ;
+select * from comments;
+select * from board order by board_group desc, board_group_order asc ;
+select * from board order by board_group asc, board_group_order desc ;
+
+set FOREIGN_KEY_CHECKS = 0;
+truncate table board;
+set FOREIGN_KEY_CHECKS = 1;
+
+-- 게시글 추가
+INSERT INTO BOARD(title,content,writer,passwd,create_date,modified_date,board_group) VALUES('a','a','a','a',now(),now(), (select ifnull(max(l.board_group) + 1,1) from board l));
+
+
+-- 현재 페이지에서 시작 번호
+SELECT (SELECT COUNT(*) FROM BOARD WHERE BOARD_GROUP_ORDER = 0) -
+(select count(*) from (SELECT BOARD_GROUP_ORDER FROM BOARD ORDER BY BOARD_GROUP DESC, BOARD_GROUP_ORDER ASC LIMIT 0 ,0) l where l.board_group_order = 0) as rnum FROM DUAL;
+
+SELECT COUNT(*) FROM (SELECT ID FROM BOARD ORDER BY BOARD_GROUP DESC, BOARD_GROUP_ORDER ASC LIMIT 0 ,2) l WHERE l.board_group_order = 0;
+
+
+desc files;
+
+select * from files;
+select * from board where id = 37;

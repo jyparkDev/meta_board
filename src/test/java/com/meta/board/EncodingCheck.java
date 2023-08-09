@@ -1,7 +1,7 @@
 package com.meta.board;
 
 import com.meta.board.domain.board.BoardDto;
-import com.meta.board.mapper.BoardMapper;
+import com.meta.board.domain.board.BoardMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

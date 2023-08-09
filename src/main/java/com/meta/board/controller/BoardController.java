@@ -1,11 +1,9 @@
 package com.meta.board.controller;
 
 import com.meta.board.domain.*;
-import com.meta.board.domain.board.Board;
 import com.meta.board.domain.board.BoardDto;
 import com.meta.board.domain.board.BoardUpdateDto;
-import com.meta.board.domain.comment.CommentResponseDto;
-import com.meta.board.repository.comment.CommentRepository;
+import com.meta.board.model.Board;
 import com.meta.board.service.BoardService;
 import com.meta.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,9 +87,10 @@ public class BoardController {
 
     /** 글작성 Controller */
     @PostMapping("/write")
-    public String write(@ModelAttribute Board board,@RequestParam(required = false, name = "file") List<MultipartFile> file ){
-        log.info("singleFile : {}" ,file );
+    public String write(@ModelAttribute Board board) throws IOException {
+
         boardService.join(board);
+
         return "redirect:/board/list?page=1&pageSize=10&sort=create_date";
     }
 

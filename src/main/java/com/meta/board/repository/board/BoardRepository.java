@@ -1,10 +1,10 @@
 package com.meta.board.repository.board;
 
-import com.meta.board.domain.board.Board;
 import com.meta.board.domain.board.BoardDto;
 import com.meta.board.domain.board.BoardUpdateDto;
 import com.meta.board.domain.Condition;
 import com.meta.board.domain.reply.ReplyMakeInfoDto;
+import com.meta.board.model.Board;
 
 import java.util.List;
 

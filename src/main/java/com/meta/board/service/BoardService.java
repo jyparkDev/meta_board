@@ -1,18 +1,24 @@
 package com.meta.board.service;
 
-import com.meta.board.domain.board.Board;
 import com.meta.board.domain.board.BoardDto;
 import com.meta.board.domain.board.BoardUpdateDto;
 import com.meta.board.domain.Condition;
-import com.meta.board.mapper.BoardMapper;
+import com.meta.board.domain.board.BoardMapper;
+import com.meta.board.domain.file.FileMapper;
+import com.meta.board.domain.file.FileRequest;
+import com.meta.board.domain.file.FileUtils;
+import com.meta.board.model.Board;
 import com.meta.board.repository.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,19 +28,44 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final PasswordEncoder passwordEncoder;
-    private final BoardMapper mapper;
+    private final BoardMapper boardMapper;
+    private final FileMapper fileMapper;
 
     
-    public void join(Board board){
+    public void join(Board board) throws IOException {
 
+        // 패스워드 암호화
         String encodePassword = passwordEncoder.encode(board.getPasswd());
         board.passwordEncoding(encodePassword);
 
+        // 게시글 등록
         boardRepository.save(board);
 
-/*        Long findBoardId = boardRepository.findBoardId();
+        Long boardId = board.getId();
 
-        boardRepository.updateBoardGroup(findBoardId,findBoardId);*/
+        List<MultipartFile> files = board.getFiles();
+
+        if(Objects.isNull(files)){
+            return;
+        }
+
+        List<FileRequest> fileRequestList = FileUtils.uploadFiles(files);
+
+        if (fileRequestList.isEmpty()){
+            return;
+        }
+
+
+        for (FileRequest file : fileRequestList) {
+            file.setBoardId(boardId);
+        }
+
+
+
+        fileMapper.saveAll(fileRequestList);
+
+
+
     }
 
     @Transactional(readOnly = true)
@@ -44,7 +75,7 @@ public class BoardService {
     
     public BoardDto findOne(Long id){
         BoardDto board = boardRepository.findById(id);
-        mapper.addViewCount(id);
+        boardMapper.addViewCount(id);
         return board;
     }
 

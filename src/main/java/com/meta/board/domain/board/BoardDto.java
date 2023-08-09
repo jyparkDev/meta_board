@@ -12,10 +12,10 @@ public class BoardDto {
     private String title;
     private String content;
     private int viewNum;
-    private String create_date;
-    private int comment_count;
-    private int board_group;
-    private int board_group_order;
-    private int board_depth;
+    private String createDate;
+    private int commentCount;
+    private int boardGroup;
+    private int boardGroupOrder;
+    private int boardDepth;
     private int exist;
 }
