@@ -45,8 +45,11 @@ public interface BoardMapper {
             "order by BOARD_GROUP ${condition.dir}, BOARD_GROUP_ORDER desc) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}")
     List<BoardDto> findAll(@Param("offset") int offset, @Param("pageSize") int pageSize, Condition condition);
 
-    @Select("SELECT * FROM BOARD")
-    List<BoardDto> findAllForExcel();
+    @Select("SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, B.board_depth, B.board_group_order, " +
+            "(select count(*) from comments c where B.id = c.board_id) as comment_count from board B, " +
+            "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
+            "order by BOARD_GROUP ${condition.dir}, BOARD_GROUP_ORDER desc) list ORDER BY list.rnum DESC")
+    List<BoardDto> findAllForExcel(@Param("condition") Condition condition);
 
 
     /* 단일 게시글 조회 QUERY */

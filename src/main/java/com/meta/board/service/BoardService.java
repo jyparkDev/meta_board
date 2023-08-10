@@ -30,6 +30,7 @@ public class BoardService {
     private final PasswordEncoder passwordEncoder;
     private final BoardMapper boardMapper;
     private final FileMapper fileMapper;
+    private final FileUtils fileUtils;
 
     
     public void join(Board board) throws IOException {
@@ -49,7 +50,7 @@ public class BoardService {
             return;
         }
 
-        List<FileRequest> fileRequestList = FileUtils.uploadFiles(files);
+        List<FileRequest> fileRequestList = fileUtils.uploadFiles(files);
 
         if (fileRequestList.isEmpty()){
             return;

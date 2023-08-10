@@ -181,3 +181,24 @@ label{
     display: inline;
     float:right;
 }
+
+.file-area{
+    border:1px solid #eee;
+    margin: 15px 0;
+}
+
+.file-title{
+    padding: 10px;
+}
+.cont{
+    border-left: 1px solid #eee;
+}
+.cont > a{
+    display: block;
+    margin-left: 20px;
+    padding: 2px 0;
+}
+
+.icons{
+    margin-right: 2px;
+}

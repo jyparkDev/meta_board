@@ -18,4 +18,8 @@ public class BoardDto {
     private int boardGroupOrder;
     private int boardDepth;
     private int exist;
+
+    public long getBoard_group() {
+        return 0;
+    }
 }

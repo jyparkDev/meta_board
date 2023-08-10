@@ -1,12 +1,14 @@
 package com.meta.board.service;
 
-import com.meta.board.repository.board.Board;
 import com.meta.board.domain.board.BoardDto;
 import com.meta.board.domain.board.BoardMapper;
+import com.meta.board.model.Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +32,7 @@ class BoardServiceTest {
 //    }
 
     @Test
-    void 게시글_등록() {
+    void 게시글_등록() throws IOException {
         Board board = Board.builder()
                 .title("title")
                 .content("content")

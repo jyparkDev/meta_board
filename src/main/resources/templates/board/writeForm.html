@@ -17,6 +17,18 @@
         <meta charset="UTF-8">
         <script>
             $( document ).ready( function() {
+                $('input[type="text"]').keydown(function() {
+                    if (event.keyCode === 13) {
+                        event.preventDefault();
+                    };
+                });
+
+                $('input[type="password"]').on('keydown keyup',function() {
+                    if (event.keyCode === 13) {
+                        event.preventDefault();
+                    };
+                });
+
                 $('#title').focus();
                 inputCheck();
 
@@ -38,15 +50,6 @@
                     form.action = "/board/write";
                     form.submit();
                 }
-            }
-
-            function addFile(){
-                $('#file-msg').css('display','none');
-                let newUploadForm = '<div class="upload-form">' +
-                    '<input type="file" name="files" class="upload-name"/>' +
-                    '<button class="btn btn-danger remove-upload-form">삭제</button>' +
-                    '</div>';
-                $("#upload-forms").append(newUploadForm);
             }
 
             function allFileRemove(){

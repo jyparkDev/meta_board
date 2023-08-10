@@ -129,3 +129,7 @@
     background-color: #4f914f;
     color: #fff;
 }
+
+#excel > i{
+    margin-right: 5px;
+}

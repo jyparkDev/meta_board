@@ -28,3 +28,12 @@ function resetForm(){
 function home(){
     window.location.href = "/";
 }
+
+function addFile(){
+    $('#file-msg').css('display','none');
+    let newUploadForm = '<div class="upload-form">' +
+        '<input type="file" name="files" class="upload-name"/>' +
+        '<button class="btn btn-danger remove-upload-form">삭제</button>' +
+        '</div>';
+    $("#upload-forms").append(newUploadForm);
+}

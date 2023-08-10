@@ -73,7 +73,10 @@ function inputCheck(){
             $('#title').val(title.substring(0,50));
             $('#title').focus();
             alert('제목 50자 초과');
-        }
+        };
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        };
     });
 
     $('#title').bind('input paste', function(){
@@ -87,6 +90,9 @@ function inputCheck(){
             $('#writer').focus();
             alert('작성자명 20자 초과');
         }
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        };
     });
 
     $('#writer').bind('input paste', function(){
@@ -106,4 +112,5 @@ function inputCheck(){
     $('#content').bind('input paste', function(){
         $(this).trigger('focus');
     });
+
 }

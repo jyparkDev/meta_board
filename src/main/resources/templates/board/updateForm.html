@@ -9,6 +9,7 @@
         <link href="/css/writeForm.css" type="text/css" rel="stylesheet">
         <script src="/js/common.js"></script>
         <script src="/js/valid.js"></script>
+        <script src="/js/update.js"></script>
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -16,8 +17,72 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
         <meta charset="UTF-8">
+        <style>
+            .file-name{
+                width: 500px;
+            }
+
+            .upload-forms div{
+                display: flex;
+                margin-bottom: 10px;
+            }
+
+        </style>
         <script>
+            // 파일 삭제 처리용 익명 함수
+            const removeFileId = (function() {
+                const ids = [];
+                return {
+                    add(id) {
+                        console.log(id);
+                        if (ids.includes(id)) {
+                            return false;
+                        }
+                        ids.push(id);
+                    },
+                    getAll() {
+                        return ids;
+                    }
+                }
+            }());
+
+            // 파일 선택
+            function selectFile(element, id) {
+
+                const file = element.files[0];
+                console.log(file);
+
+                const filename = element.closest('.upload-form').firstElementChild;
+                console.log(filename);
+
+                // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
+                if ( !file ) {
+                    filename.value = '';
+                    return false;
+                }
+                // // 2. 파일 크기가 10MB를 초과하는 경우
+                const fileSize = Math.floor(file.size / 1024 / 1024);
+                if (fileSize > 10) {
+                    alert('10MB 이하의 파일로 업로드해 주세요.');
+                    filename.value = '';
+                    element.value = '';
+                    return false;
+                }
+
+                // 3. 파일명 지정
+                console.log(file.name);
+                filename.value = file.name;
+
+                // 4. 삭제할 파일 id 추가
+                if (id) {
+                    removeFileId.add(id);
+                }
+            }
+
             $( document ).ready( function() {
+
+                findAllFile();
+
                 let count = $('#content').val().length;
                 $('#count').text(count);
                 $('#title').on( 'keyup', function() {
@@ -92,6 +157,17 @@
                 </div>
                 <div>
                     ( <span id='count'>0</span> / 500자 )
+                </div>
+                <button class="btn btn-secondary" id="add-upload-form" type="button" onclick="addFile()">+</button>
+                <button class="btn btn-danger" id="all-remove-form" type="button" onclick="allFileRemove()">전체삭제</button>
+                <div id="upload-forms" class="upload-forms">
+                    <div class="upload-form">
+                        <span id="file-msg">파일을 업로드해주세요</span>
+                    </div>
+                </div>
+
+                <div class="file-list">
+
                 </div>
             </form>
             <div class="btn-area">

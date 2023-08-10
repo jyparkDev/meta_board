@@ -341,5 +341,32 @@ function commentPasswordCheck(id){
     return isSuccess;
 }
 
+// 전체 파일 조회
+function findAllFile() {
 
+    // 1. API 호출
+    const boardId= $('#id').val();
+    $.getJSON(`/boards/${boardId}/files`, function (data){
+
+        // 2. 로직 종료
+        if ( data.length == 0 ) {
+            return false;
+        }
+
+        // 3. 파일 영역 추가
+        let fileHtml = '<div class="file_down"><div class="cont">';
+        data.forEach(row => {
+            fileHtml += `<a href="/boards/${boardId}/files/${row.id}/download">
+                            <span class="icons"><i class="far fa-folder-open"></i></span>${row.originalName}
+                        </a>`;
+        })
+        fileHtml += '</div></div>';
+
+        // 4. 파일 HTML 렌더링
+        document.getElementById('files').innerHTML = fileHtml;
+
+    });
+
+
+}
 
