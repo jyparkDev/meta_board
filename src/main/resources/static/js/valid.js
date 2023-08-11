@@ -53,6 +53,7 @@ function updateValid(){
     let form = document.getElementById('submit-form');
     form.method ="POST";
     form.action = "/board/update";
+    form.removeFileIds.value = removeFileId.getAll().join();
     form.submit();
 }
 

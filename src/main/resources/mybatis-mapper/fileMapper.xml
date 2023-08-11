@@ -56,4 +56,40 @@
         delete_yn = 0
         AND id = #{value}
     </select>
+
+
+    <!-- 파일 리스트 조회 -->
+    <select id="findAllByIds" parameterType="list" resultType="com.meta.board.domain.file.FileResponse">
+        SELECT
+            id,
+        <include refid="fileColumns" />
+        FROM
+        files
+        WHERE
+        delete_yn = 0
+        AND id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY
+        id
+    </select>
+
+
+    <!-- 파일 삭제 -->
+    <delete id="deleteAllByIds" parameterType="list">
+        UPDATE files
+        SET
+        delete_yn = 1
+        , deleted_date = NOW()
+        WHERE
+        id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findDeleteFileNum" parameterType="long" resultType="list">
+        select
+    </select>
 </mapper>

@@ -169,7 +169,7 @@ function drawComment(comments){
     for(var i = 0 ; i < comments.length; i++){
         let writer = comments[i]['writer'];
         let content = comments[i]['content'];
-        let create_date = comments[i]['create_date'];
+        let createDate = comments[i]['createDate'];
         let id = comments[i]['id'];
         tmp_html += `<div class="card">
                                     <div class="card-header">

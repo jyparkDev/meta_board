@@ -51,6 +51,11 @@
                 +"&dir="+dir
                 +"&list="+list
         }
+
+        $(document).on('click', '#file-icon', function (){
+            let first = $(this).parent().parent().children().first();
+            first.get(0).click();
+        })
     </script>
 </head>
 <body>
@@ -79,6 +84,7 @@
                         </select>
                     </div>
                     <div class="search-bar">
+                        <label for="keyword"></label>
                         <input type="text" id="keyword" name="keyword" placeholder="검색어 입력하세요" size="50">
                     </div>
                     <div class="search-icon" onclick="send();">
@@ -104,7 +110,7 @@
                 <tr>
                     <th scope="col" class="board-id">번호</th>
                     <th scope="col" class="board-title">제목</th>
-                    <th scope="col" class="board-comment"></th>
+<!--                    <th scope="col" class="board-comment"></th>-->
                     <th scope="col" class="board-write">작성자</th>
                     <th scope="col" class="board-date">생성일</th>
                     <th scope="col" class="views">조회수</th>
@@ -119,7 +125,7 @@
                 <th:block th:if="${boards.size() > 0}" >
                     <tr th:each="board:${boards}">
                         <th:block th:if="${board.boardGroupOrder} == 0">
-                            <th scope="row"></th>
+                            <th scope="row" th:text="${board.rnum}"></th>
                         </th:block>
                         <th:block th:if="${board.boardGroupOrder} > 0">
                             <th scope="row"></th>
@@ -127,24 +133,38 @@
                         <td id="title" th:with="end=${board.boardDepth} - 1">
                             <th:block th:if="${end} >= 0">
                                 <th:block  th:each="p: ${#numbers.sequence(0,end)}">
-                                    &nbsp;
+                                    &nbsp;&nbsp;&nbsp;
                                 </th:block>
                                 <span><img src="/image/reply.svg" alt="reply" class="reply-icon"></span>
                             </th:block>
                             <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},
                             sort=${condition.sort}, scroll=false,dir=${condition.dir})}" th:text="${board.title}"></a>
-                        </td>
-                        <td id="comment-count">(
+                            <span>[
                             <th:block th:if="${board.commentCount} > 0">
                                 <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},
                                 scroll=true,sort=${condition.sort}, dir=${condition.dir})}"
-                                    th:text="${board.commentCount}"></a>
+                                   th:text="${board.commentCount}"></a>
                             </th:block>
                             <th:block th:if="${board.commentCount} == 0">
                                 <a th:text="${board.commentCount}"></a>
                             </th:block>
-                            )
+                                ]</span>
+                            <th:block th:if="${board.fileCount} != 0">
+                                <span><i class="fa-regular fa-file" id="file-icon"></i></span>
+                            </th:block>
+
                         </td>
+<!--                        <td id="comment-count">(-->
+<!--                            <th:block th:if="${board.commentCount} > 0">-->
+<!--                                <a th:href="@{/board/view(id=${board.id},page=${ph.page}, pageSize=${ph.pageSize},list=${condition.list},keyword=${condition.keyword},-->
+<!--                                scroll=true,sort=${condition.sort}, dir=${condition.dir})}"-->
+<!--                                    th:text="${board.commentCount}"></a>-->
+<!--                            </th:block>-->
+<!--                            <th:block th:if="${board.commentCount} == 0">-->
+<!--                                <a th:text="${board.commentCount}"></a>-->
+<!--                            </th:block>-->
+<!--                            )-->
+<!--                        </td>-->
                         <td id="writer" th:text="${board.writer}"></td>
                         <td th:text="${board.createDate}"></td>
                         <td th:text="${board.viewNum}"></td>

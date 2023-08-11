@@ -69,6 +69,7 @@ public class BoardRepositoryImpl implements BoardRepository{
 
     @Override
     public ReplyMakeInfoDto findInfoForMakeReply(Long id) {
+        System.out.println(id);
         return mapper.findInfoForMakeReply(id);
     }
 

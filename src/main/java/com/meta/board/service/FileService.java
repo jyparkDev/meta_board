@@ -1,10 +1,12 @@
 package com.meta.board.service;
 
 import com.meta.board.domain.file.FileMapper;
+import com.meta.board.domain.file.FileRequest;
 import com.meta.board.domain.file.FileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +16,17 @@ import java.util.List;
 public class FileService {
 
     private final FileMapper fileMapper;
+
+    @Transactional
+    public void saveFiles(final Long postId, final List<FileRequest> files) {
+        if (CollectionUtils.isEmpty(files)) {
+            return;
+        }
+        for (FileRequest file : files) {
+            file.setBoardId(postId);
+        }
+        fileMapper.saveAll(files);
+    }
 
     /**
      * 파일 리스트 조회
@@ -34,5 +47,35 @@ public class FileService {
         return fileMapper.findById(id);
     }
 
+    /**
+     * 파일 리스트 조회
+     * @param ids - PK 리스트
+     * @return 파일 리스트
+     */
+    public List<FileResponse> findAllFileByIds(final List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        return fileMapper.findAllByIds(ids);
+    }
+
+    /**
+     * 파일 삭제 (from Database)
+     * @param ids - PK 리스트
+     */
+    @Transactional
+    public void deleteAllFileByIds(final List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        fileMapper.deleteAllByIds(ids);
+    }
+
+
+
+    @Transactional
+    public List<FileResponse> deleteFileNum(Long boardId){
+        return fileMapper.findAllByBoardId(boardId);
+    }
 
 }

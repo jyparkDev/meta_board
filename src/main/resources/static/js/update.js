@@ -16,7 +16,6 @@ function findAllFile(){
         // 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
         const filenameInputs = document.querySelectorAll('.upload-forms input[type="text"]');
         filenameInputs.forEach((input, i) => {
-            console.log(input);
             const fileInput = input.nextElementSibling;
             const fileRemoveBtn = input.parentElement.nextElementSibling;
             fileInput.setAttribute('onchange', `selectFile(this, ${data[i].id})`);

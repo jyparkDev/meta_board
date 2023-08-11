@@ -28,18 +28,14 @@ public class ExcelUtils {
     private int makeExcelHeader(Sheet sheet,int rowNum,Row row, Cell cell) {
         // Header
         row = sheet.createRow(rowNum++);
-        cell = row.createCell(0);
-        cell.setCellValue("번호");
-        cell = row.createCell(1);
-        cell.setCellValue("제목");
-        cell = row.createCell(2);
-        cell.setCellValue("댓글수");
-        cell = row.createCell(3);
-        cell.setCellValue("작성자");
-        cell = row.createCell(4);
-        cell.setCellValue("생성일");
-        cell = row.createCell(5);
-        cell.setCellValue("조회수");
+        cell = row.createCell(0); cell.setCellValue("번호");
+        cell = row.createCell(1); cell.setCellValue("제목");
+        cell = row.createCell(2); cell.setCellValue("작성자");
+        cell = row.createCell(3); cell.setCellValue("댓글수");
+        cell = row.createCell(4); cell.setCellValue("첨부 파일 수");
+        cell = row.createCell(5); cell.setCellValue("생성일");
+        cell = row.createCell(6); cell.setCellValue("조회수");
+        cell = row.createCell(7); cell.setCellValue("내용");
 
         return rowNum;
     }
@@ -49,18 +45,14 @@ public class ExcelUtils {
 
         for (BoardDto boardDto : boardList) {
             row = sheet.createRow(rowNum++);
-            cell = row.createCell(0);
-            cell.setCellValue(boardDto.getId());
-            cell = row.createCell(1);
-            cell.setCellValue(boardDto.getTitle());
-            cell = row.createCell(2);
-            cell.setCellValue(boardDto.getWriter());
-            cell = row.createCell(3);
-            cell.setCellValue(boardDto.getContent());
-            cell = row.createCell(4);
-            cell.setCellValue(boardDto.getCreateDate());
-            cell = row.createCell(5);
-            cell.setCellValue(boardDto.getViewNum());
+            cell = row.createCell(0); cell.setCellValue(boardDto.getId());
+            cell = row.createCell(1); cell.setCellValue(boardDto.getTitle());
+            cell = row.createCell(2); cell.setCellValue(boardDto.getWriter());
+            cell = row.createCell(3); cell.setCellValue(boardDto.getCommentCount());
+            cell = row.createCell(4); cell.setCellValue(boardDto.getFileCount());
+            cell = row.createCell(5); cell.setCellValue(boardDto.getCreateDate());
+            cell = row.createCell(6); cell.setCellValue(boardDto.getViewNum());
+            cell = row.createCell(7); cell.setCellValue(boardDto.getContent());
         }
     }
 

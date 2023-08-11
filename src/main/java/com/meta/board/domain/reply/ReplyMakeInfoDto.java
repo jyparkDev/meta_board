@@ -2,11 +2,12 @@ package com.meta.board.domain.reply;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 public class ReplyMakeInfoDto {
-    private int board_group;
-    private int board_group_order;
-    private int board_depth;
+    private int boardGroup;
+    private int boardGroupOrder;
+    private int boardDepth;
 }

@@ -34,7 +34,6 @@
                 const ids = [];
                 return {
                     add(id) {
-                        console.log(id);
                         if (ids.includes(id)) {
                             return false;
                         }
@@ -46,36 +45,62 @@
                 }
             }());
 
+            // 파일 삭제
+            function removeFile(element, id) {
+
+                // 1. 삭제할 파일 id 추가
+                if (id) {
+                    removeFileId.add(id);
+                    let all = removeFileId.getAll();
+                }
+
+                // 2. 파일 영역 초기화 & 삭제
+                const fileAddBtn = element.nextElementSibling;
+                if (fileAddBtn) {
+                    const inputs = element.previousElementSibling.querySelectorAll('input');
+                    inputs.forEach(input => input.value = '')
+                    return false;
+                }
+                element.parentElement.remove();
+
+                let child_length = $('#upload-forms').children().length;
+                if (child_length <= 1){
+                    $('#file-msg').css('display','block');
+                }else{
+                    $('#file-msg').css('display','hidden');
+                }
+            }
+
             // 파일 선택
             function selectFile(element, id) {
 
                 const file = element.files[0];
-                console.log(file);
 
                 const filename = element.closest('.upload-form').firstElementChild;
-                console.log(filename);
+
+                // // 2. 파일 크기가 10MB를 초과하는 경우
+                const fileSize = Math.floor(file.size / 1024 / 1024);
+                if (fileSize > 1) {
+                    alert('1MB 이하의 파일로 업로드해 주세요.');
+                    // filename.value = '';
+                    element.value = '';
+                    return false;
+                }
 
                 // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
                 if ( !file ) {
                     filename.value = '';
                     return false;
                 }
-                // // 2. 파일 크기가 10MB를 초과하는 경우
-                const fileSize = Math.floor(file.size / 1024 / 1024);
-                if (fileSize > 10) {
-                    alert('10MB 이하의 파일로 업로드해 주세요.');
-                    filename.value = '';
-                    element.value = '';
-                    return false;
-                }
+
 
                 // 3. 파일명 지정
-                console.log(file.name);
                 filename.value = file.name;
 
                 // 4. 삭제할 파일 id 추가
                 if (id) {
                     removeFileId.add(id);
+                    let all = removeFileId.getAll();
                 }
             }
 
@@ -124,6 +149,11 @@
                 $('#content').bind('input paste', function(){
                     $(this).trigger('focus');
                 });
+
+                let length = $('#upload-forms').children().length;
+                if (length <= 1){
+                    $('#file-msg').css('display','block');
+                }
             });
 
 
@@ -134,10 +164,16 @@
             <h2>수정 페이지</h2>
         </header>
         <section class="contains">
-            <form id="submit-form" autocomplete="off">
+            <form id="submit-form" autocomplete="off" enctype="multipart/form-data">
                 <input type="hidden" id="id" name="id" th:value="${board.id}">
+                    <!--/* 서버로 전달할 공지글 여부 */-->
+                    <input type="hidden" id="noticeYn" name="noticeYn" />
+                    <!--/* 삭제 처리할 파일 번호 */-->
+                    <input type="hidden" id="removeFileIds" name="removeFileIds" />
+
                 <div class="input-group mb-3 title-area">
                     <span class="input-group-text" >제목</span>
+                    <label for="title"></label>
                     <input type="text" class="form-control" aria-label="Sizing example input" 
                     aria-describedby="inputGroup-sizing-default" id="title" name="title" 
                     placeholder="제목 50자 이내" th:value="${board.title}">
@@ -145,6 +181,7 @@
                 <div class="info-area">
                     <div class="input-group mb-3 writer-area">
                         <span class="input-group-text">작성자</span>
+                        <label for="writer"></label>
                         <input type="text" class="form-control" aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default" name="writer" id="writer" 
                             placeholder="작성자명 20자이내" th:value="${board.writer}">

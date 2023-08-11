@@ -41,6 +41,7 @@
       <input type="hidden" id="id" name="id" th:value="${id}">
       <div class="input-group mb-3 title-area">
         <span class="input-group-text" >제목</span>
+        <label for="title"></label>
         <input type="text" class="form-control" aria-label="Sizing example input"
                aria-describedby="inputGroup-sizing-default" id="title" name="title"
                placeholder="제목 50자 이내" th:value="${title}">
@@ -48,12 +49,14 @@
       <div class="info-area">
         <div class="input-group mb-3 writer-area">
           <span class="input-group-text">작성자</span>
+          <label for="writer"></label>
           <input type="text" class="form-control" aria-label="Sizing example input"
                  aria-describedby="inputGroup-sizing-default" name="writer" id="writer"
                  placeholder="작성자명 20자이내">
         </div>
         <div class="input-group mb-3 password-area">
           <span class="input-group-text">PASSWORD</span>
+          <label for="passwd"></label>
           <input type="password" class="form-control" aria-label="Sizing example input"
                  aria-describedby="inputGroup-sizing-default" name="passwd" id="passwd"
                  placeholder="대/소문자,숫자,특수문자 포함 8~20자"

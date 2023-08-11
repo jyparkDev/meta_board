@@ -3,9 +3,13 @@ package com.meta.board.controller;
 import com.meta.board.domain.*;
 import com.meta.board.domain.board.BoardDto;
 import com.meta.board.domain.board.BoardUpdateDto;
+import com.meta.board.domain.file.FileRequest;
+import com.meta.board.domain.file.FileResponse;
+import com.meta.board.domain.file.FileUtils;
 import com.meta.board.model.Board;
 import com.meta.board.service.BoardService;
 import com.meta.board.service.CommentService;
+import com.meta.board.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +34,8 @@ public class BoardController {
 
     private final BoardService boardService;
     private final CommentService commentService;
+    private final FileService fileService;
+    private final FileUtils fileUtils;
 
     /** 전체 조회 Controller */
     @GetMapping("/list")
@@ -106,8 +113,19 @@ public class BoardController {
 
     /** 글수정 Controller */
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardUpdateDto board){
+    public String update(@ModelAttribute BoardUpdateDto board) throws IOException {
+        log.info("id : {}" , board.getRemoveFileIds());
         boardService.updateBoard(board.getId(),board);
+        List<FileRequest> uploadFiles = fileUtils.uploadFiles(board.getFiles());
+
+        fileService.saveFiles(board.getId(),uploadFiles);
+
+        List<FileResponse> deleteFiles = fileService.findAllFileByIds(board.getRemoveFileIds());
+
+        fileUtils.deleteFiles(deleteFiles);
+
+        fileService.deleteAllFileByIds(board.getRemoveFileIds());
+
         return "redirect:/";
     }
 
@@ -118,7 +136,17 @@ public class BoardController {
             res.setStatus(HttpStatus.NOT_FOUND.value());
             return "/error/404";
         }
-        boardService.deleteBoard(id);
+        List<FileResponse> fileResponses = fileService.deleteFileNum(id);
+        if (fileResponses.size() > 0){
+            fileUtils.deleteFiles(fileResponses);
+            boardService.deleteBoard(id);
+            List<Long> deleteFileIds = new ArrayList<>();
+            for (FileResponse f : fileResponses) {
+                deleteFileIds.add(f.getId());
+            }
+            fileService.deleteAllFileByIds(deleteFileIds);
+        }
+
         return "redirect:/";
     }
 

@@ -30,10 +30,6 @@ public class FileApiController {
 
         List<FileResponse> files = fileService.findAllFileByPostId(boardId);
 
-        for (FileResponse file : files) {
-          log.info("file :{}",file);
-        }
-
         return files;
     }
 

@@ -40,13 +40,16 @@ public interface BoardMapper {
 //            "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
 //            "order by ${condition.sort} ${condition.dir}, id ${condition.dir}) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}")
     @Select("SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, B.board_depth, B.board_group_order, " +
-            "(select count(*) from comments c where B.id = c.board_id) as comment_count from board B, " +
+            "(select count(*) from comments c where B.id = c.board_id) as comment_count, " +
+            "(select count(*)  from files where board_id = B.id and delete_yn = 0)  as file_count "  +
+            " from board B, " +
             "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
             "order by BOARD_GROUP ${condition.dir}, BOARD_GROUP_ORDER desc) list ORDER BY list.rnum DESC limit #{offset}, #{pageSize}")
     List<BoardDto> findAll(@Param("offset") int offset, @Param("pageSize") int pageSize, Condition condition);
 
-    @Select("SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, B.board_depth, B.board_group_order, " +
-            "(select count(*) from comments c where B.id = c.board_id) as comment_count from board B, " +
+    @Select("SELECT * FROM(SELECT @ROWNUM:=@ROWNUM+1 rnum ,B.id, B.title, B.view_num as viewNum,B.writer, B.create_date, B.content, " +
+            "(select count(*) from comments c where B.id = c.board_id) as commentCount, " +
+            "(select count(*)  from files where board_id = B.id)  as file_count  from board B, " +
             "(SELECT @ROWNUM:=0) R WHERE 1=1 and ${condition.list} like concat('%',#{condition.keyword},'%') " +
             "order by BOARD_GROUP ${condition.dir}, BOARD_GROUP_ORDER desc) list ORDER BY list.rnum DESC")
     List<BoardDto> findAllForExcel(@Param("condition") Condition condition);
@@ -71,8 +74,12 @@ public interface BoardMapper {
     @Select("SELECT TITLE FROM BOARD WHERE ID = #{id}")
     String findTitle(Long id);
 
-    @Select("SELECT BOARD_GROUP, BOARD_GROUP_ORDER, BOARD_DEPTH FROM BOARD WHERE ID = #{id}")
-    ReplyMakeInfoDto findInfoForMakeReply(Long id);
+    @Select("SELECT * FROM BOARD WHERE ID = #{id}")
+    ReplyMakeInfoDto findInfoForMakeReply(@Param("id") Long id);
 
 
+    @Select("SELECT (SELECT COUNT(*) FROM BOARD WHERE BOARD_GROUP_ORDER = 0) - " +
+            "(select count(*) from (SELECT BOARD_GROUP_ORDER FROM BOARD ORDER BY BOARD_GROUP DESC, BOARD_GROUP_ORDER ASC LIMIT 0 ,#{offset}) l " +
+            "where l.board_group_order = 0) as rnum FROM DUAL; ")
+    int originBoardCount(int offset);
 }

@@ -33,12 +33,7 @@ public class ExcelController {
     @GetMapping("/excel/download")
     public void excelDownload(Condition condition, HttpServletResponse response) throws IOException {
 
-        log.info("con : {}" , condition);
-        if (condition.getSort().equals("old_date")){
-            condition.setSort("create_date");
-            condition.setDir("DESC");
-        }
-        log.info("con : {}",condition);
+
         List<BoardDto> boardList = mapper.findAllForExcel(condition);
 
 //        Workbook wb = new HSSFWorkbook();

@@ -44,3 +44,10 @@
 #add-upload-form{
     margin: 15px 0;
 }
+
+
+.file-size-box{
+    display: inline-block;
+    float:right;
+    padding-top: 10px;
+}

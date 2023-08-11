@@ -31,6 +31,7 @@ public class BoardService {
     private final BoardMapper boardMapper;
     private final FileMapper fileMapper;
     private final FileUtils fileUtils;
+    private final FileService fileService;
 
     
     public void join(Board board) throws IOException {
@@ -52,26 +53,20 @@ public class BoardService {
 
         List<FileRequest> fileRequestList = fileUtils.uploadFiles(files);
 
-        if (fileRequestList.isEmpty()){
-            return;
-        }
-
-
-        for (FileRequest file : fileRequestList) {
-            file.setBoardId(boardId);
-        }
-
-
-
-        fileMapper.saveAll(fileRequestList);
-
-
+        fileService.saveFiles(boardId,fileRequestList);
 
     }
 
     @Transactional(readOnly = true)
     public List<BoardDto> findAll(int offset, int pageSize, Condition condition){
-        return boardRepository.findAll(offset,pageSize, condition);
+        List<BoardDto> boardList = boardRepository.findAll(offset, pageSize, condition);
+        int rnum = boardMapper.originBoardCount(offset);
+        for (BoardDto boardDto : boardList) {
+            if (boardDto.getBoardDepth() == 0){
+                boardDto.setRnum((long)rnum--);
+            }
+        }
+        return boardList;
     }
     
     public BoardDto findOne(Long id){

@@ -1,9 +1,11 @@
 package com.meta.board.domain.board;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
 public class BoardDto {
     private Long rnum;
@@ -18,6 +20,7 @@ public class BoardDto {
     private int boardGroupOrder;
     private int boardDepth;
     private int exist;
+    private int fileCount;
 
     public long getBoard_group() {
         return 0;

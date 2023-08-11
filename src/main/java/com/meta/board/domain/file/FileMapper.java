@@ -1,6 +1,7 @@
 package com.meta.board.domain.file;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -41,4 +42,7 @@ public interface FileMapper {
      * @return 파일 상세정보
      */
     FileResponse findById(Long id);
+
+
+    List<FileResponse> findDeleteFileNum(Long id);
 }

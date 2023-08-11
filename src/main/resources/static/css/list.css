@@ -133,3 +133,7 @@
 #excel > i{
     margin-right: 5px;
 }
+
+#file-icon{
+    cursor:pointer;
+}
