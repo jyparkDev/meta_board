@@ -7,6 +7,7 @@ import com.meta.board.domain.reply.ReplyMakeInfoDto;
 import com.meta.board.model.Board;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardRepository {
     void save(Board board);

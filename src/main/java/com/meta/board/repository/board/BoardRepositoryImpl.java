@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -59,7 +60,7 @@ public class BoardRepositoryImpl implements BoardRepository{
 
     @Override
     public int count(String keyword, String list) {
-        return mapper.count(keyword, list);
+        return mapper.count(keyword,list);
     }
 
     @Override

@@ -8,4 +8,17 @@
         values (#{board.title},#{board.content},#{board.writer},#{board.passwd},now(),now(),
         (select ifnull(max(l.board_group) + 1,1) from board l))
     </insert>
+
+    <update id="addViewCount">
+        update board set view_num = view_num + 1 where id = #{id}
+    </update>
+
+    <select id="findOne">
+        select * from board where id=#{id}
+    </select>
+
+    <select id="getBoardPasswd">
+        select passwd from board where id = #{id}
+    </select>
+
 </mapper>
